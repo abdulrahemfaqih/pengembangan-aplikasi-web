@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+
+/* Style Index.php */
+* {
+   /* border: 1px solid black; */
+   padding: 0;
+   margin: 0;
+   font-family: "poppins";
+}
+
+body {
+   height: 100vh;
+}
+
+.inputJumlah {
+   display: flex;
+   background-color: white;
+   justify-content: center;
+}
+.inputJumlah h1 {
+   padding-bottom: 1rem;
+}
+form:nth-child(1) {
+   display: flex;
+   flex-direction: column;
+   row-gap: 15px;
+   border: 3px solid black;
+   padding: 1rem;
+   border-radius: 10px;
+   margin: 1rem;
+}
+label,
+input {
+   display: block;
+}
+input {
+   width: 200px;
+   padding: 3px 10px;
+}
+button {
+   padding: 5px 10px;
+   border-radius: 6px;
+   border: 1px solid gray;
+   margin-top: 1rem;
+}
+
+.resultForm {
+   padding: 1rem;
+}
+
+.form {
+   display: flex;
+   gap: 2rem;
+   flex-wrap: wrap;
+}
+
+.form section {
+   border: 1px solid black;
+   border-radius: 6px;
+   padding: 1rem;
+}
+
+.input {
+   display: flex;
+   flex-direction: column;
+   row-gap: 0.5rem;
+}
+/* end style index.php */
