@@ -1,0 +1,15 @@
+#form-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1rem;
+}
+#form-input{
+    flex: 1;
+}
+
+.jumlah {
+    flex: 2;
+    align-self: last baseline;
+}
