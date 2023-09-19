@@ -23,7 +23,7 @@ $menu = ["Bakso", "Nasi Goreng", "Mie Ayam", "Capjay"]
 			<!-- Main content -->
 			<div class="content">
 				<section class="container-fluid">
-					<form action="dataTransaksi.php" method="post">
+					<form action="dataPesanan.php" method="post">
 						<!-- select -->
 						<div id="form-container">
 							<div id="form-input">
@@ -60,7 +60,6 @@ $menu = ["Bakso", "Nasi Goreng", "Mie Ayam", "Capjay"]
 	<script>
 		function copyForm() {
 			$("#form-container").clone().appendTo($("#form-copy"))
-
 		}
 	</script>
 </body>
