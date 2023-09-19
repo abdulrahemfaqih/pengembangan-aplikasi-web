@@ -15,31 +15,35 @@ function query($query) {
 function tambah($data) {
     global $conn;
     $nama = htmlspecialchars($data["nama"]);
-    $jenis = htmlspecialchars($data["jenis"]);
+    $ketersediaan = htmlspecialchars($data["ketersediaan"]);
     $harga = htmlspecialchars($data["harga"]);
 
-    $query = "INSERT INTO menu VALUES('', '$jenis', '$nama', '$harga')";
+    $query = "INSERT INTO menu VALUES('', '$nama', '$harga', '$ketersediaan')";
 
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
 
-function ubahMenu($data) {
+function ubahMenu($data)
+{
     global $conn;
     $id = $data["id"];
     $nama = htmlspecialchars($data["nama"]);
-    $jenis = htmlspecialchars($data["jenis"]);
     $harga = htmlspecialchars($data["harga"]);
+    $ketersediaan = htmlspecialchars($data["ketersediaan"]); // Ambil data ketersediaan
+
     $query = "UPDATE menu SET
               nama = '$nama',
-              jenis = '$jenis',
-              harga = '$harga'
+              harga = '$harga',
+              ketersediaan = '$ketersediaan'
             WHERE id = $id
           ";
+
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
+
 
 function hapusMenu($id) {
     global $conn;

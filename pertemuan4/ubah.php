@@ -45,13 +45,18 @@ if (isset($_POST["submit"])) {
                     <td><label for="nim">Nama</label></td>
                     <td>: <input type="text" name="nama" value="<?= $menu["nama"]  ?>"></td>
                 </tr>
-                <tr>
-                    <td><label for="nama">Jenis</label></td>
-                    <td>: <input type="text" name="jenis"  value="<?= $menu["jenis"] ?>"></td>
-                </tr>
+
                 <tr>
                     <td><label for="email">harga</label></td>
-                    <td>: <input type="text" name="harga"  value="<?= $menu["harga"] ?>"></td>
+                    <td>: <input type="text" name="harga" value="<?= $menu["harga"] ?>"></td>
+                </tr>
+                <tr>
+                    <td><label for="nama">Ketersediaan</label></td>
+                    <td>: <select name="ketersediaan">
+                            <option value="ada" <?= ($menu["ketersediaan"] == 'ada') ? 'selected' : '' ?>>Ada</option>
+                            <option value="habis" <?= ($menu["ketersediaan"] == 'habis') ? 'selected' : '' ?>>habis</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center"><button type="submit" name="submit">Edit Data</button></td>
