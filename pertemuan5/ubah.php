@@ -1,11 +1,10 @@
 <?php
-
-
 require "fungsi.php";
 
 $id = $_GET["id"];
 
 $menu = query("SELECT * FROM menu WHERE id = $id")[0];
+
 
 if (isset($_POST["submit"])) {
     // cek apapah data berhasil diubah atau tidak

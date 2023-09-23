@@ -19,6 +19,8 @@ if (isset($_POST["submit"])) {
     }
 }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +59,6 @@ if (isset($_POST["submit"])) {
             </table>
         </form>
     </div>
-    <script src="bootstrap.min.js"></script>
 </body>
 
 </html>

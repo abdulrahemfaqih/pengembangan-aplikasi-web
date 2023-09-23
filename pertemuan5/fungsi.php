@@ -49,7 +49,6 @@ function hapusMenu($id) {
     global $conn;
     mysqli_query($conn, "DELETE FROM menu WHERE id = $id");
     return mysqli_affected_rows($conn);
-
 }
 
 function formatHarga($harga)
