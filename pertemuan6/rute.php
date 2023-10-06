@@ -155,6 +155,7 @@ function dijkstra($graf, $asal, $tujuan)
 
     while (!$antrian->isEmpty()) {
         $saatIni = $antrian->extract();
+        echo "Saat ini: $saatIni<br>";
 
         if ($saatIni === $tujuan) {
             break;
@@ -166,6 +167,7 @@ function dijkstra($graf, $asal, $tujuan)
                 $jarak[$tetangga] = $alternatif;
                 $sebelumnya[$tetangga] = $saatIni;
                 $antrian->insert($tetangga, -$alternatif);
+                echo "perbarui jarak ke $tetangga: $alternatif (via $saatIni)<br>";
             }
         }
     }
@@ -183,9 +185,11 @@ function dijkstra($graf, $asal, $tujuan)
             $totalJarak += $jarakKeSebelumnya;
         }
         $saatIni = $kotaSebelumnya;
+        echo "saat ini : $saatIni<br>";
     }
 
     $rute = array_reverse($rute);
+    var_dump($rute);
     return ["rute" => $rute, "totalJarak" => $totalJarak];
 }
 
