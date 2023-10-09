@@ -10,7 +10,7 @@ for ($x = 0; $x < $arrLength; $x++) {
 echo "<br>no 4<br>setelah penambahan 5 data<br>";
 
 $data = ["Banana", "Orange", "Watermelon", "Coconut", "Grape"];
-for ($i = 0; $i < count($data); $i++) {
+for ($i = 0; $i <count($data); $i++) {
     $fruits[] = $data[$i];
 }
 $arrLength = count($fruits);

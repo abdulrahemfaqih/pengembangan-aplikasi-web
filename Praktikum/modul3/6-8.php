@@ -20,6 +20,7 @@ echo "nilai pada indeks terkhir = " .  $nilaiTerakhir . "<br>";
 //7
 echo "<br>no 7<br>";
 unset($height["faqih"]);
+var_dump($height);
 echo "nilai pada indeks terkhir = " .  $nilaiTerakhir . "<br>";
 
 //8

@@ -36,15 +36,8 @@ echo "<br>no 12<br>";
         <tr>
             <td><?= $row + 1 ?></td>
             <?php for ($col = 0; $col < count($students[$row]); $col++) :  ?>
-                ec<td><?= $students[$row][$col] ?></td>
+                <td><?= $students[$row][$col] ?></td>
             <?php endfor;  ?>
         </tr>
     <?php endfor; ?>
-</table>
-
-<table>
-    <tr>
-        <th></th>
-    </tr>
-
 </table>

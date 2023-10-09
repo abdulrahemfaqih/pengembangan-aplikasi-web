@@ -1,3 +1,6 @@
+<?php
+include "validate.inc";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +10,9 @@
     <title>form</title>
 </head>
 
-<body>
+<body style="padding: 0 1rem;">
     <h1>Register</h1>
-    <form method='post' action="processData.php">
+    <form method="post" action="processData.php">
         <fieldset style="background-color: #D5E6E4;">
             <legend>Person Details</legend>
             <table cellspacing="15">
@@ -33,9 +36,10 @@
                     <td><label for="provinsi">Provinsi</label></td>
                     <td>
                         <select name="provinsi" id="provinsi">
-                            <option value="1">Jawa Timur</option>
-                            <option value="2">Jawa Barat</option>
-                            <option value="3">Jawa Tengah</option>
+                            <option value="Jawa Timur">Jawa Timur</option>
+                            <option value="Jawa Barat">Jawa Barat</option>
+                            <option value="Jawa Tengah">Jawa Tengah</option>
+                            <option value="Bali">Bali</option>
                         </select>
                     </td>
                 </tr>
@@ -51,7 +55,7 @@
                 </tr>
                 <tr>
                     <td><label for="bekerja">Sudah Bekerja?</label></td>
-                    <td><input type="checkbox" name="bekerja" id="bekerja"></td>
+                    <td><input type="checkbox" value="iya" name="bekerja" id="bekerja"></td>
                 </tr>
                 <tr>
                     <td>
