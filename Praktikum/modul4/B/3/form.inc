@@ -31,9 +31,9 @@ $bekerjaValue = isset($_POST['bekerja']) ? $_POST['bekerja'] : '';
             <td><label for="provinsi">Provinsi</label></td>
             <td>
                 <select name="provinsi" id="provinsi">
-                    <option value="1" <?= ($provinsiValue == '1') ? 'selected' : '' ?>>Jawa Timur</option>
-                    <option value="2" <?= ($provinsiValue == '2') ? 'selected' : '' ?>>Jawa Barat</option>
-                    <option value="3" <?= ($provinsiValue == '3') ? 'selected' : '' ?>>Jawa Tengah</option>
+                    <option value="Jawa Timur" <?= ($provinsiValue == 'Jawa Timur') ? 'selected' : '' ?>>Jawa Timur</option>
+                    <option value="Jawa Barat" <?= ($provinsiValue == 'Jawa Barat') ? 'selected' : '' ?>>Jawa Barat</option>
+                    <option value="Jawa Tengah" <?= ($provinsiValue == 'Jawa Tengah') ? 'selected' : '' ?>>Jawa Tengah</option>
                 </select>
             </td>
         </tr>

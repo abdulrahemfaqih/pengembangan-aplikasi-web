@@ -3,10 +3,7 @@ function validateName(string $surname)
 {
     $errors = [];
     if (isset($_POST["surname"]) && isset($_POST["submit"])) {
-        // if(!preg_match("/^[a-zA-Z]+$/", $namaLengkap)) {
-        //     return "field nama hanya boleh berisi huruf alfabet";
-        // }
-        if(!preg_match("/^[a-zA-Z]+$/", $surname)) {
+        if (!preg_match("/^[a-zA-Z]+$/", $surname)) {
             $errors[] = "field surname hanya boleh berisi alphabet";
         }
     }

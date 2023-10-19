@@ -1,10 +1,10 @@
 <?php
-include "validate.inc.php";
-
+include "validate.inc";
 
 $surname = $_POST["surname"];
 $email = $_POST["emailAddres"];
 $password = $_POST["password"];
+$alamat = $_POST["alamat"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
@@ -23,6 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordValidation = validatePassword($password);
     if (!empty($passwordValidation)) {
         $errors = array_merge($errors, $passwordValidation);
+    }
+
+    $addressValidation = validateAddress($alamat);
+    if (!empty($addressValidation)) {
+        $errors = array_merge($errors, $addressValidation);
     }
 
     if (!empty($errors)) {

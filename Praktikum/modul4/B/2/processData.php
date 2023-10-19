@@ -1,5 +1,5 @@
 <?php
-include "validate.inc.php";
+include "validate.inc";
 
 $nama = $_POST["surname"];
 // echo validateName($nama);

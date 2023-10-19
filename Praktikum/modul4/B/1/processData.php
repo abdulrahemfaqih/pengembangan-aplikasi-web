@@ -1,8 +1,5 @@
 <?php
-include "validate.inc.php";
-
-$nama = $_POST["surname"];
-// echo validateName($nama);
+include "validate.inc";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $validasi = validateName($_POST["surname"]);
     if (!empty($validasi)) {

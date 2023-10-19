@@ -18,7 +18,7 @@ if (isset($_POST["submit"])) {
 <body style="padding: 0 1rem;">
     <h1>Register</h1>
     <form action="processData_form.php" method="post">
-        <?php include "form.inc.php" ?>
+        <?php include "form.inc" ?>
     </form>
 </body>
 

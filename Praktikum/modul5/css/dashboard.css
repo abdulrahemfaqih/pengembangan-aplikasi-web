@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   text-decoration: none;
+   font-family: "poppins", sans-serif;
+   /* border: 1px solid black; */
+}
+
+.container {
+   display: flex;
+   width: 1000px;
+   flex-direction: column;
+   justify-content: center;
+}
+.menu {
+   display: flex;
+   justify-content: flex-end;
+    margin: 1rem 0;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1 {
+   margin: 2rem 0 0 0 ;
+   text-align: center;
+}
+
+
+table td {
+   padding: 0.7rem;
+}
+
+.nomor {
+   width: 10px;
+}
+.nomor p {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.nama {
+   width: 130px;
+}
+.telepon p {
+   display: flex;
+   justify-content: center;
+}
+
+.telp {
+   width: 250px;
+}
+.telp p {
+   display: flex;
+   justify-content: center;
+}
+
+.alamat {
+   width: 400px;
+}
+.alamat p {
+   display: flex;
+   justify-content: center;
+}
+
+table th {
+   padding: 0.5rem;
+   background-color: rgb(210, 228, 255);
+}
+img {
+   height: 100px;
+   width: 100px;
+   transition: ease-in-out 0.3s;
+}
+
+img:hover {
+   transform: scale(1.5);
+}
+a {
+   display: flex;
+   align-items: center;
+   padding: 5px;
+   font-size: 14px;
+}
+
+.tambah {
+   background-color: rgb(0, 181, 0);
+   color: white;
+   border-radius: 6px;
+   padding: 0.5rem 1rem;
+
+}
+
+.tambah:hover {
+   transform: scale(1.05);
+   background-color: rgb(13, 113, 0);
+}
+
+.aksi {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.aksi a {
+    padding: 0.5rem 1rem;
+    color: white;
+    border-radius: 5px;
+}
+.aksi .edit {
+    background-color: rgb(255, 131, 15);
+}
+.aksi .edit:hover {
+    background-color: rgb(235, 110, 7);
+}
+.aksi .hapus {
+    background-color: rgb(235, 7, 7);
+}
+.aksi .hapus:hover {
+    background-color: rgb(154, 3, 3);
+}

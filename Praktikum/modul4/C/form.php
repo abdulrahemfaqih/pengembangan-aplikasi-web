@@ -1,32 +1,43 @@
 <?php
 $namaLengkap = $email = $tanggal = "";
 $namaLengkapErr = $emailErr = $tanggalErr = "";
-
-// Inisialisasi nilai default
+$isValid = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST["namaLengkap"])) {
-        $namaLengkap = $_POST["namaLengkap"];
-        if (!preg_match("/^[a-zA-Z\s]+$/", $namaLengkap)) {
-            $namaLengkapErr = "Nama Lengkap harus berupa huruf alphabet ";
+
+        if (is_string($_POST["namaLengkap"])) {
+            $namaLengkap = $_POST["namaLengkap"];
+            if (!preg_match("/^[a-zA-Z\s]+$/", $namaLengkap)) {
+                $namaLengkapErr = "Nama Lengkap harus berupa huruf alphabet";
+            } else {
+                $namaLengkap = strtoupper($namaLengkap);
+            }
+        } else {
+            $namaLengkapErr = "Nama Lengkap harus berupa string";
         }
     } else {
         $namaLengkapErr = "Nama Lengkap harus diisi";
     }
 
-    if (empty($_POST["email"])) {
-        $emailErr = "Email Address harus diisi";
-    } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $emailErr = "Format Email Address tidak valid";
-    } else {
+    if (!empty($_POST["email"])) {
         $email = $_POST["email"];
+        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Format Email Address tidak valid";
+        }
+    } else {
+        $emailErr = "Email Address harus diisi";
     }
 
-    if (empty($_POST["tanggal"])) {
-        $tanggalErr = "Tanggal harus diisi";
-    } elseif (!DateTime::createFromFormat('Y-m-d', $_POST["tanggal"])) {
-        $tanggalErr = "Format Tanggal tidak valid. Gunakan format YYYY-MM-DD.";
-    } else {
+    if (!empty($_POST["tanggal"])) {
         $tanggal = $_POST["tanggal"];
+        if (!DateTime::createFromFormat('Y-m-d', $_POST["tanggal"])) {
+            $tanggalErr = "Format Tanggal tidak valid. Gunakan format YYYY-MM-DD.";
+        }
+    } else {
+        $tanggalErr = "Tanggal harus diisi";
+    }
+    if (empty($namaLengkapErr) && empty($emailErr) && empty($tanggalErr)) {
+        $isValid = true;
     }
 }
 ?>
@@ -42,6 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body style="padding: 0 1rem;">
     <h1>Register</h1>
+    <?php if ($isValid) : ?>
+        <p>Semua validasi berhasil!</p>
+    <?php endif; ?>
     <form method="post" action="form.php">
         <fieldset style="background-color: #D5E6E4;">
             <legend>Person Details</legend>
