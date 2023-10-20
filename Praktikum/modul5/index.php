@@ -4,6 +4,7 @@ require "functions.php";
 
 
 $dataSupplier = query("SELECT * FROM supplier");
+mysqli_close($conn);
 
 $pesan = "";
 
@@ -24,16 +25,16 @@ if (empty($dataSupplier)) {
 </head>
 
 <body>
-    <form action="" method="post" style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center;">
         <div class="container">
-            <h1>Data Master Supplier</h1>
+            <div class="header">
+                <h1>Data Master Supplier</h1>
+                <div class="menu">
+                    <a href="tambahData.php" class='tambah'>Tambah Data</a>
+                </div>
+            </div>
             <div class="table-container" id="table-container">
-                <table border="1" cellspacing="0">
-                    <div class="menu">
-                        <ul>
-                            <li><a href="tambahData.php" class='tambah'>Tambah Data</a></li>
-                        </ul>
-                    </div>
+                <table border="1" >
                     <tr>
                         <th>No.</th>
                         <th>Nama</th>
@@ -66,7 +67,7 @@ if (empty($dataSupplier)) {
                                     </p>
                                 </td>
                                 <td class="aksi">
-                                    <a  class="edit" href="ubahData.php?id=<?= $sp["id"] ?>" >Edit</a>
+                                    <a class="edit" href="ubahData.php?id=<?= $sp["id"] ?>">Edit</a>
                                     <a class="hapus" href="hapusData.php?id=<?= $sp["id"] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus supplier ini?')">Hapus</a>
                                 </td>
                             </tr>
@@ -79,7 +80,7 @@ if (empty($dataSupplier)) {
                 </table>
             </div>
         </div>
-    </form>
+    </div>
 </body>
 
 </html>

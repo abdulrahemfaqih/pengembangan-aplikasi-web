@@ -30,8 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($_POST["tanggal"])) {
         $tanggal = $_POST["tanggal"];
-        if (!DateTime::createFromFormat('Y-m-d', $_POST["tanggal"])) {
-            $tanggalErr = "Format Tanggal tidak valid. Gunakan format YYYY-MM-DD.";
+        function validateDate($date, $format = 'Y-m-d')
+        {
+            $d = DateTime::createFromFormat($format, $date);
+            return $d && $d->format($format) === $date;
+        }
+        if (!validateDate($tanggal)) {
+            $tanggalErr = "Format Tanggal tidak valid. Gunakan format YYYY-MM-DD. contoh -> 2003-10-12";
         }
     } else {
         $tanggalErr = "Tanggal harus diisi";

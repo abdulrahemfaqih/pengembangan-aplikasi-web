@@ -20,6 +20,7 @@ function query($query): array
         $rows[] = $row;
     }
     return $rows;
+    
 }
 
 
@@ -33,10 +34,10 @@ function tambahMenu(array $data): int
     $query = "INSERT INTO menu (nama, jenis, harga)
                 VALUES ('$nama', '$jenis', '$harga')";
     mysqli_query($conn, $query);
-
     return mysqli_affected_rows($conn);
-}
+    
 
+}
 
 function editMenu(array $data): int
 {
@@ -55,6 +56,7 @@ function editMenu(array $data): int
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+    
 }
 
 function hapusMenu(array $data): int
@@ -63,9 +65,11 @@ function hapusMenu(array $data): int
     $id = $_POST["id_menu"];
     mysqli_query($conn, "DELETE FROM menu WHERE id_menu = $id");
     return mysqli_affected_rows($conn);
+    
 }
 
 function formatHarga(float|int|string $harga): int|float|string
 {
     return "Rp. " . number_format($harga, 2, ",", ".");
 }
+
