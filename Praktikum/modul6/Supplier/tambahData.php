@@ -1,29 +1,28 @@
 <?php
-require "functions.php";
+require "../functions.php";
 if (isset($_POST["batal"])) {
     header("Location: index.php");
 }
-if (isset($_POST["submit"])) :
+
+
+if (isset($_POST["submit"])) {
     $nama = $_POST["nama"];
     $telp = $_POST["telp"];
     $alamat = $_POST["alamat"];
-    if (!empty($nama) && !empty($telp)  && !empty($alamat)) : ?>
-        <?php if (tambah($_POST) > 0) : mysqli_close($conn); ?>
-            <script>
-                alert('Data berhasil ditambahkan')
-                window.location.href = 'index.php'
-            </script>
-        <?php else : ?>
-            <script>
-                alert('Data Gagal ditambahkan')
-            </script>
-        <?php endif; ?>
-    <?php else : ?>
-        <script>
-            alert("Semua inputan harus diisi")
-        </script>
-    <?php endif; ?>
-<?php endif; ?>
+    if (!empty($nama) && !empty($telp) && !empty($alamat)) {
+        $result = tambahDataSupplier($_POST);
+        if ($result > 0) {
+            mysqli_close($conn);
+            echo '<script>alert("Data berhasil ditambahkan"); window.location.href = "index.php";</script>';
+        } else {
+            echo '<script>alert("Data Gagal ditambahkan");</script>';
+        }
+    } else {
+        echo '<script>alert("Semua inputan harus diisi");</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

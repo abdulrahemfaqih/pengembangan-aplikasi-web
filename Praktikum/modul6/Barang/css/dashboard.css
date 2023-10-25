@@ -6,7 +6,7 @@
    padding: 0;
    text-decoration: none;
    font-family: "Poppins", sans-serif;
-   border: 0; /* Menghapus border default dari semua elemen */
+   border: 0;
 }
 
 .container {
@@ -46,7 +46,7 @@ table td {
 table th {
    padding: 0.3rem;
    background-color: rgb(210, 228, 255);
-   border: 1px solid #ccc;
+   border: 1px solid #9f9d9d;
    padding: 1rem;
 
 }
@@ -55,11 +55,9 @@ table th {
 }
 
 
-.nama {
-   width: 200px;
+.kode {
+   width: 150px;
 }
-
-
 .telp {
    width: 180px;
 }
