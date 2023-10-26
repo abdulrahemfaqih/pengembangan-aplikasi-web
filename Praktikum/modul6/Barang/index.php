@@ -18,10 +18,10 @@ mysqli_close($conn);
         .menu {display: flex;justify-content: flex-end;margin: 0 0 1rem 0;}
         .table-container {display: flex;justify-content: center;flex-direction: column;}
         .container h2 {margin: 2rem 0 0 0;}
-        table {margin: 0 0 2rem 0;width: 100%;}
+        table {margin: 0 0 2rem 0;width: 100%; border: #ccc;}
         table,td,th {border: 1px solid #ccc;}
         table td {padding: 0.3rem;padding: 1rem;}
-        table th {background-color: rgb(210, 228, 255);padding: .5rem;}
+        table th {background-color: #DBDBDB;padding: .5rem;}
         .kode {width: 100px;}
         .nama {width: 300px;}
         .harga {width: 180px;}
@@ -29,13 +29,15 @@ mysqli_close($conn);
         .supplier {width: 100px;}
         .aksi {display: flex;gap: 10px;justify-content: center;}
         .container a {font-size: 14px;}
-        .tambah {background-color: rgb(2, 142, 2);color: white;border-radius: 6px; padding: .5rem 1rem;}
+        .tambah {background-color: rgb(53, 115, 53);color: white;border-radius: 6px;padding: 0.5rem 1rem;}
         .tambah:hover {transform: scale(1.05);background-color: rgb(24, 186, 3);}
-        .aksi a {padding: 0.5rem 1rem;color: white;border-radius: 5px; display: block;}
-        .aksi .edit {background-color: rgb(225, 109, 0);}
+        .container a {font-size: 14px;}
+        .aksi {display: flex;gap: 10px;justify-content: center;}
+        .aksi a {padding: 0.5rem 1rem;color: white;border-radius: 5px;}
+        .aksi .edit {background-color: rgb(187, 123, 64);}
         .aksi .edit:hover {background-color: rgb(248, 123, 20);}
-        .aksi .hapus {background-color: rgb(203, 3, 3);}
-		.aksi .hapus:hover {background-color: rgb(255, 68, 68);}
+        .aksi .hapus {background-color: rgb(174, 63, 63);}
+		.aksi .hapus:hover {background-color: rgb(253, 6, 6);}
     </style>
 </head>
 <body>

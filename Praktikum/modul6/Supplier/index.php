@@ -1,5 +1,6 @@
 <?php
 require "../functions.php";
+
 $dataSupplier = query("SELECT * FROM supplier");
 mysqli_close($conn);
 ?>
@@ -18,20 +19,22 @@ mysqli_close($conn);
         .container h2 {margin: 2rem 0 0 0;}
         table {margin: 0 0 2rem 0;width: 100%; border: #ccc ;}
         table td {padding: 0.3rem;border: 1px solid #ccc;padding: 1rem;}
-        table th {padding: 0.3rem;background-color: rgb(210, 228, 255);border: 1px solid #ccc;padding: .5rem;}
+        table th {padding: 0.3rem;background-color: #DBDBDB;border: 1px solid #ccc;padding: .5rem;}
         .nomor {width: 10px;}
         .nama {width: 200px;}
         .telp {width: 180px;}
         .alamat {width: 400px;}
-        .tambah {background-color: rgb(2, 142, 2);color: white;border-radius: 6px;padding: 0.5rem 1rem;}
+        .tambah {background-color: rgb(53, 115, 53);color: white;border-radius: 6px;padding: 0.5rem 1rem;}
         .tambah:hover {transform: scale(1.05);background-color: rgb(24, 186, 3);}
         .container a {font-size: 14px;}
         .aksi {display: flex;gap: 10px;justify-content: center;}
         .aksi a {padding: 0.5rem 1rem;color: white;border-radius: 5px;}
-        .aksi .edit {background-color: rgb(225, 109, 0);}
+        .aksi .edit {background-color: rgb(187, 123, 64);}
         .aksi .edit:hover {background-color: rgb(248, 123, 20);}
-        .aksi .hapus {background-color: rgb(203, 3, 3);}
-		.aksi .hapus:hover {background-color: rgb(255, 68, 68);}
+        .aksi .hapus {background-color: rgb(174, 63, 63);}
+		.aksi .hapus:hover {background-color: rgb(253, 6, 6);}
+        .aksi .detail {background-color: #6e93c6;}
+		.aksi .detail:hover {background-color: #004bce;}
     </style>
 </head>
 <body>
@@ -78,6 +81,7 @@ mysqli_close($conn);
                                 <td class="aksi">
                                     <a class="edit" href="ubahData.php?id=<?= $sp["id"] ?>">Edit</a>
                                     <a class="hapus" href="hapusData.php?id=<?= $sp["id"] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus supplier ini?')">Hapus</a>
+                                    <a class="detail" href="detailSupplier.php?id=<?= $sp["id"] ?>">detail</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -40,7 +40,8 @@
 <body>
     <div class="container">
         <h1>Selamat Datang Di Warung Faqih</h1>
-        <a class="button" href="menu.php">Menu</a>
+        <a class="button" href="menu.php">Data Menu</a>
+        <a class="button" href="data_order.php">Data Order</a>
     </div>
 </body>
 

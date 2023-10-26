@@ -10,7 +10,6 @@ if (!$result) {
 if (isset($_POST["submit"]) && !empty($_POST["pelayan"]) && !empty($_POST["no_meja"])) {
     $nama_pelayan = $_POST["pelayan"];
     $no_meja = $_POST["no_meja"];
-
     $query = "INSERT INTO `order` (pelayan, no_meja) VALUES ('$nama_pelayan', '$no_meja')";
     $result = mysqli_query($conn, $query);
     if (!$result) {

@@ -20,7 +20,7 @@ function query($query): array
         $rows[] = $row;
     }
     return $rows;
-    
+
 }
 
 
@@ -35,8 +35,17 @@ function tambahMenu(array $data): int
                 VALUES ('$nama', '$jenis', '$harga')";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
-    
+}
 
+function tambahOrder($data) {
+    global $conn;
+    $namaPelayan = htmlspecialchars($data["pelayan"]);
+    $noMeja = htmlspecialchars($data["no_meja"]);
+
+    $query = "INSERT INTO `order` (id_order, pelayan, no_meja)
+                VALUES ('id_order','$namaPelayan', '$noMeja')";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
 }
 
 function editMenu(array $data): int
@@ -56,7 +65,23 @@ function editMenu(array $data): int
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
-    
+}
+
+function editOrder(array $data) {
+    global $conn;
+    $id = $_POST["id_order"];
+    $pelayan = htmlspecialchars($data["pelayan"]);
+    $noMeja = htmlspecialchars($data["no_meja"]);
+
+    $query = "UPDATE `order` SET
+                pelayan = '$pelayan',
+                no_meja = '$noMeja'
+            WHERE id_order = $id";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+
 }
 
 function hapusMenu(array $data): int
@@ -65,7 +90,14 @@ function hapusMenu(array $data): int
     $id = $_POST["id_menu"];
     mysqli_query($conn, "DELETE FROM menu WHERE id_menu = $id");
     return mysqli_affected_rows($conn);
-    
+}
+
+function hapusOrder($data) {
+    global $conn;
+    $id = $_POST["id_order"];
+    mysqli_query($conn, "DELETE FROM `order` WHERE id_order = $id");
+    return mysqli_affected_rows($conn);
+
 }
 
 function formatHarga(float|int|string $harga): int|float|string

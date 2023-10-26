@@ -24,13 +24,7 @@ if (isset($_POST["Bhapus"])) {
         echo "<script>alert('Menu gagal dihapus')</script>";
     }
 }
-
-
-
-$listMenu = query("SELECT * FROM menu ORDER BY id_menu DESC")
 ?>
-
-
 <?php include("layout/header.php") ?>
 <div class="container mt-4">
     <div class="card">
@@ -38,21 +32,61 @@ $listMenu = query("SELECT * FROM menu ORDER BY id_menu DESC")
             <h5>Data Master Menu</h5>
         </div>
         <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                Tambah Menu
-            </button>
+            <div class="menu">
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                    Tambah Menu
+                </button>
+            </div>
             <table class="table table-bordered table-hover">
+
+                <tr>
+                    <th>No.</th>
+                    <th>
+                        Nama Menu
+                        <a href="menu.php?sortName=<?php echo isset($_GET["sortName"]) && $_GET["sortName"] === "asc" ? "desc" : "asc"; ?>">
+                            <?php if (isset($_GET["sortName"]) && $_GET["sortName"] == "asc") : ?>
+                                <i class="fa fa-sort-asc"></i>
+                            <?php elseif (isset($_GET["sortName"]) && $_GET["sortName"] == "desc") : ?>
+                                <i class="fa fa-sort-desc"></i>
+                            <?php else : ?>
+                                <i class="fa fa-sort"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>Jenis Menu</th>
+                    <th>
+                        Harga Menu
+                        <a href="menu.php?sortHarga=<?php echo isset($_GET["sortHarga"]) && $_GET["sortHarga"] === "asc" ? "desc" : "asc"; ?>">
+                            <?php if (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "asc") : ?>
+                                <i class="fa fa-sort-asc"></i>
+                            <?php elseif (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "desc") : ?>
+                                <i class="fa fa-sort-desc"></i>
+                            <?php else : ?>
+                                <i class="fa fa-sort"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>Aksi</th>
+                </tr>
+                <?php
+                if (isset($_GET["sortName"])) {
+                    if ($_GET["sortName"] == "asc") {
+                        $listMenu = query("SELECT * FROM `menu` ORDER BY nama ASC");
+                    } else {
+                        $listMenu = query("SELECT * FROM `menu` ORDER BY nama DESC");
+                    }
+                } elseif (isset($_GET["sortHarga"])) {
+                    if ($_GET["sortHarga"] == "asc") {
+                        $listMenu = query("SELECT * FROM `menu` ORDER BY harga ASC");
+                    } else {
+                        $listMenu = query("SELECT * FROM `menu` ORDER BY harga DESC");
+                    }
+                } else {
+                    $listMenu = query("SELECT * FROM `menu`");
+                }
+                $no = 1; ?>
                 <?php if (!empty($listMenu)) : ?>
-                    <tr>
-                        <th>No.</th>
-                        <th>Nama Menu</th>
-                        <th>Jenis Menu</th>
-                        <th>Harga Menu</th>
-                        <th>Aksi</th>
-                    </tr>
-                    <?php
-                    $no = 1;
-                    foreach ($listMenu as $menu) : ?>
+                    <?php foreach ($listMenu as $menu) : ?>
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $menu["nama"] ?></td>
@@ -125,7 +159,6 @@ $listMenu = query("SELECT * FROM menu ORDER BY id_menu DESC")
                             </div>
                         </div>
                         <!-- end modal hapus -->
-
                     <?php endforeach; ?>
                 <?php else :  ?>
                     <p style=" font-weight: bold;">Tidak ada menu ditemukan!</p>
