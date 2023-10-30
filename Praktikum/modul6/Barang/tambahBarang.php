@@ -31,16 +31,7 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Supplier</title>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-        * {list-style: none; margin: 0;padding: 0;text-decoration: none;font-family: "poppins", sans-serif;}
-        .container {height: 100vh;display: flex;justify-content: center;flex-direction: column;align-items: center;}
-        h1 {margin: 1rem;}
-        form {margin: 1rem;}
-        td {padding: 0.8rem;}
-        button {padding: 0.5rem 1rem;color: white;border: none;border-radius: 5px;cursor: pointer;}
-        input {padding: 5px 0 10px 5px;width: 300px;}
-    </style>
+    <link rel="stylesheet" href="../assets/css/tambahData.css">
 </head>
 <body>
     <div class="container">

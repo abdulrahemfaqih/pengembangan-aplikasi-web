@@ -59,7 +59,20 @@ $menu = ["Bakso", "Nasi Goreng", "Mie Ayam", "Capjay"]
 	<!-- ./wrapper -->
 	<script>
 		function copyForm() {
-			$("#form-container").clone().appendTo($("#form-copy"))
+			// Clone the form container
+			var clonedForm = $("#form-container").clone();
+
+			// Find all selects in the cloned form
+			clonedForm.find("select[name='menu[]']").each(function() {
+				// Enable all options
+				$(this).find("option").prop("disabled", false);
+
+				// Remove selected options
+				$(this).find("option:selected").prop("selected", false);
+			});
+
+			// Append the cloned form to the form-copy div
+			clonedForm.appendTo("#form-copy");
 		}
 	</script>
 </body>

@@ -152,7 +152,7 @@ include("layout/header.php");
                         $newOrderID = $lastOrder + 1;
                         ?>
                         <label class="form-label">ID Order</label>
-                        <input type="text" disabled class="form-control" value="<?= $newOrderID ?>">
+                        <input type="text" class="form-control" value="<?= $newOrderID ?>" name="id_order">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Pelayan</label>

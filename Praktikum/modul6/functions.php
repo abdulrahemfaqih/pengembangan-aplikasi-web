@@ -1,6 +1,7 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "", "penjualan");
 
+
 function query($query)
 {
     global $conn;
@@ -13,7 +14,8 @@ function query($query)
 }
 
 
-function tambahDataSupplier($data)
+// =============================== CRUD SUPPLIER ============================
+function tambahSupplier($data)
 {
     global $conn;
     $nama = htmlspecialchars($data["nama"]);
@@ -27,38 +29,14 @@ function tambahDataSupplier($data)
 }
 
 
-function tambahDataBarang($data)
-{
-    global $conn;
-    $kodeBarang = htmlspecialchars($data["kode_barang"]);
-    $namaBarang = htmlspecialchars($data["nama_barang"]);
-    $hargaBarang = htmlspecialchars($data["harga_barang"]);
-    $stokBarang = htmlspecialchars($data["stok_barang"]);
-    $supplierId = htmlspecialchars($data["supplier"]);
-
-    $query = "INSERT INTO barang (kode_barang, nama_barang, harga, stok, supplier_id) VALUES('$kodeBarang', '$namaBarang', '$hargaBarang', '$stokBarang', '$supplierId')";
-    mysqli_query($conn, $query);
-
-    return mysqli_affected_rows($conn);
-}
-
-
-function hapus($id)
+function hapusSupplier($id)
 {
     global $conn;
     mysqli_query($conn, "DELETE FROM supplier WHERE id = $id");
     return mysqli_affected_rows($conn);
 }
-function hapusbarang($id)
-{
-    global $conn;
-    mysqli_query($conn, "DELETE FROM barang WHERE id = $id");
-    return mysqli_affected_rows($conn);
-}
 
-
-
-function ubah($data)
+function ubahSupplier($data)
 {
     global $conn;
     $id = $data["id"];
@@ -75,6 +53,24 @@ function ubah($data)
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 };
+
+
+
+// =========================== CRUD BARANG =========================
+function tambahDataBarang($data)
+{
+    global $conn;
+    $kodeBarang = htmlspecialchars($data["kode_barang"]);
+    $namaBarang = htmlspecialchars($data["nama_barang"]);
+    $hargaBarang = htmlspecialchars($data["harga_barang"]);
+    $stokBarang = htmlspecialchars($data["stok_barang"]);
+    $supplierId = htmlspecialchars($data["supplier"]);
+
+    $query = "INSERT INTO barang (kode_barang, nama_barang, harga, stok, supplier_id) VALUES('$kodeBarang', '$namaBarang', '$hargaBarang', '$stokBarang', '$supplierId')";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
 
 function ubahBarang($data)
 {
@@ -98,7 +94,41 @@ function ubahBarang($data)
     return mysqli_affected_rows($conn);
 };
 
-function formatHarga(float|int|string $harga): int|float|string
+
+function hapusbarang($id)
+{
+    global $conn;
+    mysqli_query($conn, "DELETE FROM barang WHERE id = $id");
+    return mysqli_affected_rows($conn);
+}
+
+
+function hapusTransDetailByBarangId($id) {
+    global $conn;
+    mysqli_query($conn,"DELETE FROM transaksi_detail WHERE barang_id = $id");
+    return mysqli_affected_rows($conn);
+}
+
+function updateTotalBayarbyTransID($totalBayar, $id) {
+    global $conn;
+    mysqli_query($conn,"UPDATE transaksi SET total = $totalBayar WHERE id = $id");
+    return mysqli_affected_rows($conn);
+}
+
+function getNamaPelanggan($id) {
+    global $conn;
+    return mysqli_query($conn,"SELECT nama FROM pelanggan WHERE id = $id");
+}
+
+
+
+
+
+
+
+
+// ======================== OTHER FUNCTIONS =====================
+function formatHarga($harga)
 {
     return "Rp. " . number_format($harga,0, ",", ".");
 }

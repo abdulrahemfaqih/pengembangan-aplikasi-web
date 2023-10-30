@@ -1,13 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 * {
    list-style: none;
    margin: 0;
    padding: 0;
    text-decoration: none;
-   font-family: "poppins", sans-serif;
+   font-family: "Poppins", sans-serif;
 }
-
 .container {
    height: 100vh;
    display: flex;
@@ -24,7 +22,6 @@ form {
 td {
    padding: 0.8rem;
 }
-
 button {
    padding: 0.5rem 1rem;
    color: white;
@@ -32,9 +29,6 @@ button {
    border-radius: 5px;
    cursor: pointer;
 }
-
-
-
 input {
    padding: 5px 0 10px 5px;
    width: 300px;

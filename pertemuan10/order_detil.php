@@ -1,11 +1,13 @@
 <?php
 include "functions.php";
+$total = 0;
 if (isset($_GET["last_id"]) && isset($_GET["no_meja"])) {
     $id_order = $_GET["last_id"];
     $no_meja = $_GET["no_meja"];
 }
 
 if (isset($_POST["id_menu"]) && isset($_POST["jumlah"])) {
+
 
     $id_menu = $_POST["id_menu"];
     $jumlah = $_POST["jumlah"];
@@ -69,6 +71,9 @@ if (isset($_POST["id_menu"]) && isset($_POST["jumlah"])) {
                                 <td><?= $row["jumlah"] ?></td>
                                 <td><?= formatHarga($row["harga"]) ?></td>
                                 <td><?= formatHarga($row["subtotal"])?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"><?= $total ?></td>
                             </tr>
                         <?php endwhile ?>
                     <?php endif ?>

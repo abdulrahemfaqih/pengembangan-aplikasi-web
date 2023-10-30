@@ -39,11 +39,12 @@ function tambahMenu(array $data): int
 
 function tambahOrder($data) {
     global $conn;
+    $id_order = htmlspecialchars($data["id_order"]);
     $namaPelayan = htmlspecialchars($data["pelayan"]);
     $noMeja = htmlspecialchars($data["no_meja"]);
 
     $query = "INSERT INTO `order` (id_order, pelayan, no_meja)
-                VALUES ('id_order','$namaPelayan', '$noMeja')";
+                VALUES ('$id_order','$namaPelayan', '$noMeja')";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }

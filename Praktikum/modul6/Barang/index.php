@@ -5,43 +5,17 @@ mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-        * { list-style: none; margin: 0; padding: 0; text-decoration: none; font-family: "Poppins", sans-serif; }
-        .container { display: flex; width: 1000px; flex-direction: column;justify-content: center;}
-        .menu {display: flex;justify-content: flex-end;margin: 0 0 1rem 0;}
-        .container { display: flex; width: 1000px; flex-direction: column;justify-content: center;}
-        .menu {display: flex;justify-content: flex-end;margin: 0 0 1rem 0;}
-        .table-container {display: flex;justify-content: center;flex-direction: column;}
-        .container h2 {margin: 2rem 0 0 0;}
-        table {margin: 0 0 2rem 0;width: 100%; border: #ccc;}
-        table,td,th {border: 1px solid #ccc;}
-        table td {padding: 0.3rem;padding: 1rem;}
-        table th {background-color: #DBDBDB;padding: .5rem;}
-        .kode {width: 100px;}
-        .nama {width: 300px;}
-        .harga {width: 180px;}
-        .stok {width: 100px;}
-        .supplier {width: 100px;}
-        .aksi {display: flex;gap: 10px;justify-content: center;}
-        .container a {font-size: 14px;}
-        .tambah {background-color: rgb(53, 115, 53);color: white;border-radius: 6px;padding: 0.5rem 1rem;}
-        .tambah:hover {transform: scale(1.05);background-color: rgb(24, 186, 3);}
-        .container a {font-size: 14px;}
-        .aksi {display: flex;gap: 10px;justify-content: center;}
-        .aksi a {padding: 0.5rem 1rem;color: white;border-radius: 5px;}
-        .aksi .edit {background-color: rgb(187, 123, 64);}
-        .aksi .edit:hover {background-color: rgb(248, 123, 20);}
-        .aksi .hapus {background-color: rgb(174, 63, 63);}
-		.aksi .hapus:hover {background-color: rgb(253, 6, 6);}
-    </style>
+    <link rel="stylesheet" href="../assets/css/tabelBarang.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+
 <body>
-    <?php include "../layout/navbar.php" ?>
+    <?php include "../assets/layout/navbar.php" ?>
     <div style="display: flex; justify-content: center; align-items: center;">
         <div class="container">
             <h2>Data Master Barang</h2>
@@ -50,7 +24,7 @@ mysqli_close($conn);
             </div>
             <div class="table-container" id="table-container">
                 <table border="1" cellspacing="0">
-                    <tr>
+                    <tr class="text-center">
                         <th>No.</th>
                         <th>Kode</th>
                         <th>Nama</th>
@@ -109,4 +83,5 @@ mysqli_close($conn);
         </div>
     </div>
 </body>
+
 </html>

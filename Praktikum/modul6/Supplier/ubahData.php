@@ -9,7 +9,7 @@ $now_supplier = query("SELECT * FROM supplier WHERE id = $id")[0];
 
 if (isset($_POST["submit"])) : ?>
     <?php if ($now_supplier["nama"] !== $_POST["nama"] || $now_supplier["telp"] !== $_POST["telp"] || $now_supplier["alamat"] !== $_POST["alamat"]) : ?>
-        <?php if (ubah($_POST) > 0) : mysqli_close($conn);  ?>
+        <?php if (ubahSupplier($_POST) > 0) : mysqli_close($conn);  ?>
             <script>
                 alert('Data berhasil diubah')
                 window.location.href = 'index.php'
@@ -34,16 +34,7 @@ if (isset($_POST["submit"])) : ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Data</title>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-        * {list-style: none;margin: 0;padding: 0;text-decoration: none;font-family: "Poppins", sans-serif;}
-        .container {height: 100vh;display: flex;justify-content: center;flex-direction: column;align-items: center;}
-        h1 {margin: 1rem;}
-        form {margin: 1rem;}
-        td {padding: 0.8rem;}
-        button {padding: 0.5rem 1rem;color: white;border: none;border-radius: 5px;cursor: pointer;}
-        input {padding: 5px 0 10px 5px;width: 300px;}
-    </style>
+    <link rel="stylesheet" href="../assets/css/editData.css">
 </head>
 
 <body>
