@@ -68,7 +68,6 @@ table th {
 }
 .aksi {
    display: flex;
-   gap: 10px;
    justify-content: center;
 }
 .aksi a {

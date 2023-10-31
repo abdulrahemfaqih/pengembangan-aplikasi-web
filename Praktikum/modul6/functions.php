@@ -103,6 +103,9 @@ function hapusbarang($id)
 }
 
 
+// ==================== CRUD TRANSAKSI  ==============
+
+
 function hapusTransDetailByBarangId($id) {
     global $conn;
     mysqli_query($conn,"DELETE FROM transaksi_detail WHERE barang_id = $id");
@@ -115,15 +118,13 @@ function updateTotalBayarbyTransID($totalBayar, $id) {
     return mysqli_affected_rows($conn);
 }
 
-function getNamaPelanggan($id) {
+
+function hapusTransaksibyID($id)
+{
     global $conn;
-    return mysqli_query($conn,"SELECT nama FROM pelanggan WHERE id = $id");
+    mysqli_query($conn, "DELETE FROM transaksi WHERE id = $id");
+    return mysqli_affected_rows($conn);
 }
-
-
-
-
-
 
 
 

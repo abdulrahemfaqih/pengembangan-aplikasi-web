@@ -10,12 +10,7 @@ if (isset($_GET["transaksi_id"])) {
 
     $total_harga = query("SELECT total FROM transaksi WHERE id = $transaksi_id")[0];
 }
-// $data =
-//     "SELECT transaksi_detail.transaksi_id, transaksi_detail.barang_id, barang.nama_barang, barang.harga, transaksi_detail.qty
-//             FROM transaksi_detail
-//             LEFT JOIN barang ON barang.id = transaksi_detail.barang_id
-//             WHERE transaksi_detail.transaksi_id = $transaksi_id
-//             ORDER BY transaksi_detail.transaksi_id";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +27,7 @@ if (isset($_GET["transaksi_id"])) {
     <?php include "../assets/layout/navbar.php" ?>
     <div style="display: flex; justify-content: center; align-items: center;">
         <div class="container">
-            <h2>Transaksi ID <span style="color: red;"><?= $transaksi_id ?></span>
+            <h2>Detail Transaksi ID <span style="color: red;"><?= $transaksi_id ?></span>
             </h2>
             <div class="table-container" id="table-container">
                 <?php if (!empty($transaksi)) : ?>
@@ -45,8 +40,6 @@ if (isset($_GET["transaksi_id"])) {
                             <th>Jumlah</th>
                             <th>Sub Total</th>
                         </tr>
-
-
                         <?php $i = 1 ?>
                         <?php foreach ($transaksi as $db) :
                             $subtotal = $db["harga"] * $db["qty"];
@@ -84,20 +77,20 @@ if (isset($_GET["transaksi_id"])) {
                                 </td>
 
                             </tr>
-                            <?php endforeach; ?>
-                            <tr>
-                                <td class="stok" colspan="5">
-                                    <p>
-                                        Total
-                                    </p>
-                                </td>
-                                <td class="stok">
-                                    <p>
-                                        <b><?= formatHarga($total_harga["total"]) ?></b>
-                                    </p>
-                                </td>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td class="stok" colspan="5">
+                                <p>
+                                    Total
+                                </p>
+                            </td>
+                            <td class="stok">
+                                <p>
+                                    <b><?= formatHarga($total_harga["total"]) ?></b>
+                                </p>
+                            </td>
 
-                            </tr>
+                        </tr>
                     <?php else : ?>
                         <tr>
                             <th colspan="5" style="background-color: white;">Tidak ada detail Transaksi</th>
@@ -108,5 +101,4 @@ if (isset($_GET["transaksi_id"])) {
         </div>
     </div>
 </body>
-
 </html>

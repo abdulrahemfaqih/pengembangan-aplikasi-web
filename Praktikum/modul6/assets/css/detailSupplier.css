@@ -89,3 +89,24 @@ table th {
 .aksi .detail:hover {
    background-color: #516e9f;
 }
+
+.navigasi {
+   display: flex;
+   gap: 10px;
+}
+.navigasi a {
+   width: 20px;
+   height: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: black;
+   border: 1px solid rgb(99, 99, 99);
+}
+.navigasi a:hover {
+   background-color: rgb(149, 173, 218);
+}
+
+.navigasi img:hover {
+   transform: scale(1);
+}

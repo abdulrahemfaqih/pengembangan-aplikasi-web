@@ -1,6 +1,16 @@
 <?php
 require "../functions.php";
 
+if (isset($_GET["transaksi_id"])) {
+    $transaksi_id = $_GET["transaksi_id"];
+    if (hapusTransaksibyID($transaksi_id) > 0) {
+        echo "<meta http-equiv=refresh content=1;URL='index.php'>";
+    } else {
+        echo "<meta http-equiv=refresh content=1;URL='index.php'>";
+    }
+}
+
+
 $query = "DELETE FROM `transaksi` WHERE id NOT IN (SELECT transaksi_id FROM transaksi_detail)";
 $result = mysqli_query($conn, $query);
 if (!$result) {
@@ -24,8 +34,8 @@ if (isset($_POST["submit"])) {
         echo "<script>alert('semua inputan harus diisi')</script>";
     }
 }
-$dataPelanggan = query("SELECT * FROM `pelanggan`");
 $dataTransaksi = query("SELECT * FROM transaksi");
+$dataPelanggan = query("SELECT * FROM pelanggan");
 mysqli_close($conn);
 ?>
 <!DOCTYPE html>
@@ -37,6 +47,7 @@ mysqli_close($conn);
     <title>Halaman Admin</title>
     <link rel="stylesheet" href="../assets/css/tabelTransaksi.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -53,13 +64,14 @@ mysqli_close($conn);
                 <table border="1" cellspacing="0" class="table table-hover">
                     <tr class="text-center">
                         <th>No.</th>
-                        <th>ID Order</th>
+                        <th>ID Transaksi</th>
                         <th>Waktu Transaksi</th>
                         <th>Keterangan</th>
                         <th>Total</th>
-                        <th>Pelanggan</th>
+                        <th>Pelanggan ID</th>
                         <th>Tindakan</th>
                     </tr>
+
                     <?php if (!empty($dataTransaksi)) : ?>
                         <?php $i = 1 ?>
                         <?php foreach ($dataTransaksi as $transaksi) : ?>
@@ -96,16 +108,18 @@ mysqli_close($conn);
                                 </td>
                                 <td class="aksi">
                                     <a class="detail" href="detailTransaksi.php?transaksi_id=<?= $transaksi["id"] ?>">
-                                    <button type="button" class="btn btn-info">Detail</button>
-                                </a>
+                                        <button type="button" class="btn btn-info">Detail</button>
+                                    </a>
+                                    <a class="detail" href="index.php?transaksi_id=<?= $transaksi["id"] ?>"onclick="return confirm('Apakah anda yakin ingin menghapus supplier ini?')">
+                                        <button type="button" class="btn btn-danger">Hapus</button>
+                                    </a>
                                 </td>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <th colspan="7" style="background-color: white;">Tidak ada data transaksi.</th>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <tr>
-                            <th colspan="7" style="background-color: white;">Tidak ada data transaksi.</th>
-                        </tr>
-                    <?php endif; ?>
+                        <?php endif; ?>
                 </table>
             </div>
         </div>
