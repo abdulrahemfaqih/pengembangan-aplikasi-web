@@ -1,8 +1,7 @@
 <?php
 require "../functions.php";
 
-
-if (isset($_GET["last_id"]) && isset($_GET["pelanggan"]) && isset($_GET["keterangan"]) && isset($_GET["waktu_transaksi"])) {
+if (isset($_GET["last_id"]) || isset($_GET["pelanggan"]) || isset($_GET["keterangan"]) ||  isset($_GET["waktu_transaksi"])) {
     $transaksi_id = $_GET["last_id"];
     $pelanggan = $_GET["pelanggan"];
     $keterangan = $_GET["keterangan"];

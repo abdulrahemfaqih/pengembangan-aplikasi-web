@@ -89,6 +89,7 @@ if (isset($_GET["transaksi_id"])) {
                                     <b><?= formatHarga($total_harga["total"]) ?></b>
                                 </p>
                             </td>
+
                         </tr>
                     <?php else : ?>
                         <tr>
