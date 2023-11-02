@@ -2,7 +2,7 @@
 require("functions.php");
 
 
-if ( isset($_GET["orderID"]) || isset($_GET["tanggal"]) || isset($_GET["jam"])||isset($_GET["no"])) {
+if (isset($_GET["orderId"]) || isset($_GET["tanggal"]) || isset($_GET["jam"]) || isset($_GET["no"])) {
 
     $id_order = $_GET["orderId"];
     $tanggal = $_GET["tanggal"];
@@ -17,10 +17,9 @@ if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu
     if (count($ambilHarga) > 0) {
         $harga = $ambilHarga["harga"];
         $subtotal = $jumlah * $harga;
-        if (tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal) < 0) {
+        if (tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal) <= 0) {
             echo "menu gagal ditambahkan";
         }
-
     }
 }
 
@@ -28,7 +27,6 @@ if (isset($_GET["id_menu"])) {
     $id_menu = $_GET["id_menu"];
     hapusOrderIdByIdMenu($id_order, $id_menu);
     header("Location: formOrderDetil.php?orderId=" . $id_order . "&tanggal=" . $tanggal . "&jam=" . $jam . "&no=" . $no);
-
 }
 
 if (isset($_POST["batal"])) {
@@ -38,11 +36,10 @@ if (isset($_POST["batal"])) {
 
 if (isset($_POST["selesai"])) {
     header("Location: data_order.php");
-
 }
 
 
-$listMenu = getMenuBelumDitambahkan($id_order);
+$listMenu = query("SELECT * FROM menu ");
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +127,9 @@ $listMenu = getMenuBelumDitambahkan($id_order);
                 <?php endif; ?>
             </table>
             <button class="btn btn-warning" type="submit" name="selesai">Selesai</button>
-            <button class="btn btn-danger" type="submit" name="batal">Batal</button>
+            <?php if (!isset($_GET["tambahlagi"])) : ?>
+                <button class="btn btn-danger" type="submit" name="batal">Batal</button>
+            <?php endif; ?>
         </form>
     </div>
 </body>

@@ -33,15 +33,15 @@ if (isset($_GET["id_order"])) {
         <div class="container">
             <h2 class="my-4">Detail ID Order <span style="color: red;"><?= $id_order ?></span></h2>
             <div class="menu mb-4" style="display: flex; justify-content: flex-end;" my>
-                <a href="formOrderDetil.php?orderId=<?= $id_order ?>&tanggal=<?= $tanggal ?>&jam=<?= $jam ?>&no=<?= $no ?>"><button class="btn btn-primary">Tambah Order</button></a>
+                <a href="formOrderDetil.php?orderId=<?= $id_order ?>&tanggal=<?= $tanggal ?>&jam=<?= $jam ?>&no=<?= $no ?>&tambahlagi=''"><button class="btn btn-primary">Tambah Order</button></a>
             </div>
             <div class="table-container" id="table-container">
                 <?php if (!empty($order_detail)) : ?>
                     <table border="1" cellspacing="0" class="table table-bordered">
                         <tr>
                             <th>No.</th>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
+                            <th>ID Menu</th>
+                            <th>Nama Menu</th>
                             <th>Harga</th>
                             <th>Jumlah</th>
                             <th>Sub Total</th>
@@ -59,7 +59,7 @@ if (isset($_GET["id_order"])) {
                                         <?= $i++ ?>
                                     </p>
                                 </td>
-                                <td class="kode">
+                                <td class="id_menu">
                                     <p>
                                         <?= $order["id_menu"] ?>
                                     </p>
@@ -74,12 +74,12 @@ if (isset($_GET["id_order"])) {
                                         <?= formatHarga($order["harga"]) ?>
                                     </p>
                                 </td>
-                                <td class="stok">
+                                <td class="jumlah">
                                     <p>
                                         <?= $order["jumlah"] ?>
                                     </p>
                                 </td>
-                                <td class="stok">
+                                <td class="subtotal">
                                     <p>
                                         <?= formatHarga($order["subtotal"]) ?>
                                     </p>
@@ -87,7 +87,7 @@ if (isset($_GET["id_order"])) {
                             </tr>
                         <?php endforeach; ?>
                         <tr>
-                            <td class="stok" colspan="5">
+                            <td class="total" colspan="5">
                                 <p>
                                     Total
                                 </p>

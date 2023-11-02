@@ -33,7 +33,7 @@ if (isset($_POST["Bubah"])) {
 
 // hapus
 if (isset($_POST["Bhapus"])) {
-    if (hapusOrderByOrderId($_POST) > 0) {
+    if (hapusOrderByOrderId($_POST["id_order"]) > 0) {
         echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
     } else {
         echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
@@ -165,7 +165,7 @@ include("layout/header.php");
                         $newOrderID = $lastOrder + 1;
                         ?>
                         <label class="form-label">ID Order</label>
-                        <input type="text" class="form-control" value="<?= $newOrderID ?>" name="id_order">
+                        <input type="text" class="form-control" readonly value="<?= $newOrderID ?>" name="id_order">
                     </div>
                     <?php
                     date_default_timezone_set("Asia/Jakarta");
@@ -174,11 +174,11 @@ include("layout/header.php");
                     ?>
                     <div class="mb-3">
                         <label class="form-label">Tanggal Order</label>
-                        <input type="text" required class="form-control" value="<?= $tanggal ?>" name="tanggal_order">
+                        <input type="text" required class="form-control" readonly value="<?= $tanggal ?>" name="tanggal_order">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jam Order</label>
-                        <input type="text" required class="form-control" value="<?= $jam ?>" name="jam_order">
+                        <input type="text" required class="form-control" readonly value="<?= $jam ?>" name="jam_order">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Pelayan</label>

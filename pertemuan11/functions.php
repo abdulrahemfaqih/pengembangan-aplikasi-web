@@ -130,10 +130,6 @@ function tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal)
     return $harga;
  }
 
- function getMenuBelumDitambahkan($id_order) {
-    $barang = query("SELECT * FROM `menu` WHERE id_menu NOT IN (SELECT id_menu FROM `order_detil` WHERE id_order = '$id_order')");
-    return $barang;
- }
 
  function hapusOrderIdByIdMenu($id_order,$id_menu) {
     global $conn;
