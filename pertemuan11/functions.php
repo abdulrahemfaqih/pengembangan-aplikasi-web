@@ -1,135 +1,156 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "penjualan");
+$server = "localhost";
+$username = "root";
+$password = "";
+$database = "db_warung";
+
+// koneksi
+$conn = mysqli_connect($server, $username, $password, $database);
+
+if (!$conn) {
+    die("Koneksi gagal : " . mysqli_connect_error($conn));
+}
 
 
-function query($query)
+
+function query($query): array
 {
     global $conn;
-    $result = mysqli_query($conn, $query);
     $rows = [];
+    $result = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
     }
     return $rows;
+
 }
 
+// ============================ FUNCTIONS MENU ======================
 
-// =============================== CRUD SUPPLIER ============================
-function tambahSupplier($data)
+function tambahMenu(array $data): int
 {
     global $conn;
     $nama = htmlspecialchars($data["nama"]);
-    $telepon = htmlspecialchars($data["telp"]);
-    $alamat = htmlspecialchars($data["alamat"]);
+    $jenis = htmlspecialchars($data["jenis"]);
+    $harga = htmlspecialchars($data["harga"]);
 
-    $query = "INSERT INTO supplier VALUES('', '$nama', '$telepon', '$alamat')";
+    $query = "INSERT INTO menu (nama, jenis, harga)
+                VALUES ('$nama', '$jenis', '$harga')";
     mysqli_query($conn, $query);
-
     return mysqli_affected_rows($conn);
 }
 
 
-function hapusSupplier($id)
-{
-    global $conn;
-    mysqli_query($conn, "DELETE FROM supplier WHERE id = $id");
-    return mysqli_affected_rows($conn);
-}
 
-function ubahSupplier($data)
+function editMenu(array $data): int
 {
     global $conn;
-    $id = $data["id"];
+    $id = $_POST["id_menu"];
     $nama = htmlspecialchars($data["nama"]);
-    $telepon = htmlspecialchars($data["telp"]);
-    $alamat = htmlspecialchars($data["alamat"]);
+    $jenis = htmlspecialchars($data["jenis"]);
+    $harga = htmlspecialchars($data["harga"]);
 
-    $query = "UPDATE supplier SET
-              nama = '$nama',
-              telp = '$telepon',
-              alamat = '$alamat'
-            WHERE id = $id
-          ";
-    mysqli_query($conn, $query);
-    return mysqli_affected_rows($conn);
-};
+    $query = "UPDATE menu SET
+                nama = '$nama',
+                jenis = '$jenis',
+                harga = '$harga'
+            WHERE id_menu = $id";
 
-
-
-// =========================== CRUD BARANG =========================
-function tambahDataBarang($data)
-{
-    global $conn;
-    $kodeBarang = htmlspecialchars($data["kode_barang"]);
-    $namaBarang = htmlspecialchars($data["nama_barang"]);
-    $hargaBarang = htmlspecialchars($data["harga_barang"]);
-    $stokBarang = htmlspecialchars($data["stok_barang"]);
-    $supplierId = htmlspecialchars($data["supplier"]);
-
-    $query = "INSERT INTO barang (kode_barang, nama_barang, harga, stok, supplier_id) VALUES('$kodeBarang', '$namaBarang', '$hargaBarang', '$stokBarang', '$supplierId')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
 }
 
-function ubahBarang($data)
+function hapusMenu(array $data): int
 {
     global $conn;
-    $id = $data["id"];
-    $kodeBarang = htmlspecialchars($data["kode_barang"]);
-    $namaBarang = htmlspecialchars($data["nama_barang"]);
-    $hargaBarang = htmlspecialchars($data["harga_barang"]);
-    $stokBarang = htmlspecialchars($data["stok_barang"]);
-    $supplierId = htmlspecialchars($data["supplier"]);
+    $id = $_POST["id_menu"];
+    mysqli_query($conn, "DELETE FROM menu WHERE id_menu = $id");
+    return mysqli_affected_rows($conn);
+}
 
-    $query = "UPDATE barang SET
-                kode_barang = '$kodeBarang',
-                nama_barang = '$namaBarang',
-                harga = '$hargaBarang',
-                stok = '$stokBarang',
-                supplier_id = '$supplierId'
-            WHERE id = $id
-          ";
+
+// ====================== FUNCTIONS ORDER ==========================
+
+
+
+function tambahOrder($data)
+{
+    global $conn;
+    $id_order = htmlspecialchars($data["id_order"]);
+    $tanggal = htmlspecialchars($data["tanggal_order"]);
+    $jam = htmlspecialchars($data["jam_order"]);
+    $namaPelayan = htmlspecialchars($data["pelayan"]);
+    $noMeja = htmlspecialchars($data["no_meja"]);
+
+    $query = "INSERT INTO `order` (id_order, tgl_order, jam_order, pelayan, no_meja)
+              VALUES ('$id_order', '$tanggal', '$jam', '$namaPelayan', '$noMeja')";
+
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
-};
+}
 
-
-function hapusbarang($id)
+function hapusOrderByOrderId($id_order)
 {
     global $conn;
-    mysqli_query($conn, "DELETE FROM barang WHERE id = $id");
+    mysqli_query($conn, "DELETE FROM `order` WHERE id_order = $id_order");
     return mysqli_affected_rows($conn);
 }
 
 
-// ==================== CRUD TRANSAKSI  ==============
 
-
-function hapusTransDetailByBarangId($id) {
+function editOrder(array $data) {
     global $conn;
-    mysqli_query($conn,"DELETE FROM transaksi_detail WHERE barang_id = $id");
+    $id = $_POST["id_order"];
+    $pelayan = htmlspecialchars($data["pelayan"]);
+    $noMeja = htmlspecialchars($data["no_meja"]);
+
+    $query = "UPDATE `order` SET
+                pelayan = '$pelayan',
+                no_meja = '$noMeja'
+            WHERE id_order = $id";
+
+    mysqli_query($conn, $query);
+
     return mysqli_affected_rows($conn);
 }
 
-function updateTotalBayarbyTransID($totalBayar, $id) {
+function tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal)
+ {
     global $conn;
-    mysqli_query($conn,"UPDATE transaksi SET total = $totalBayar WHERE id = $id");
+    $query = "INSERT INTO `order_detil` (id_order, id_menu, harga, jumlah, subtotal)
+            VALUES ('$id_order', '$id_menu', '$harga', '$jumlah', '$subtotal')";
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
-}
+ }
 
 
-function hapusTransaksibyID($id)
+ function getHargaByIdMenu($id_menu) {
+    $harga = query("SELECT harga FROM menu WHERE id_menu = $id_menu")[0];
+    return $harga;
+ }
+
+ function getMenuBelumDitambahkan($id_order) {
+    $barang = query("SELECT * FROM `menu` WHERE id_menu NOT IN (SELECT id_menu FROM `order_detil` WHERE id_order = '$id_order')");
+    return $barang;
+ }
+
+ function hapusOrderIdByIdMenu($id_order,$id_menu) {
+    global $conn;
+    mysqli_query($conn,"DELETE FROM order_detil WHERE id_order = $id_order AND id_menu = $id_menu");
+    return mysqli_affected_rows($conn);
+ }
+
+
+
+
+
+
+
+
+
+function formatHarga(float|int|string $harga): int|float|string
 {
-    global $conn;
-    mysqli_query($conn, "DELETE FROM transaksi WHERE id = $id");
-    return mysqli_affected_rows($conn);
+    return "Rp. " . number_format($harga, 2, ",", ".");
 }
 
-
-
-// ======================== OTHER FUNCTIONS =====================
-function formatHarga($harga)
-{
-    return "Rp. " . number_format($harga,0, ",", ".");
-}

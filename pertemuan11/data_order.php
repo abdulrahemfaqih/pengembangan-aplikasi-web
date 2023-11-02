@@ -1,10 +1,22 @@
 <?php
 require "functions.php";
 
+$query = "DELETE FROM `order` WHERE id_order NOT IN (SELECT id_order FROM order_detil)";
+$result = mysqli_query($conn, $query);
+if (!$result) {
+    echo "query gagal : " . mysqli_error($conn);
+}
+
 // tambah
 if (isset($_POST["Btambah"])) {
+    $id_order = $_POST["id_order"];
+    $tanggal_order = $_POST["tanggal_order"];
+    $jam_order = $_POST["jam_order"];
+    $no_meja = $_POST["no_meja"];
+    $pelayan = $_POST["pelayan"];
     if (tambahOrder($_POST) > 0) {
-        echo "<script>alert('Order berhasil ditambah')</script>";
+        header("Location: formOrderDetil.php?orderId=" . $id_order . "&tanggal=" . $tanggal_order . "&jam=" . $jam_order . "&no=" . $no_meja);
+
     } else {
         echo "<script>alert('Order gagal ditambah')</script>";
     }
@@ -13,23 +25,24 @@ if (isset($_POST["Btambah"])) {
 // ubah
 if (isset($_POST["Bubah"])) {
     if (editOrder($_POST) > 0) {
-        echo "<script>alert('Order berhasil diubah')</script>";
+        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
     } else {
-        echo "<script>alert('Order gagal diubah')</script>";
+        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
     }
 }
 
 // hapus
 if (isset($_POST["Bhapus"])) {
-    if (hapusOrder($_POST) > 0) {
-        echo "<script>alert('Order berhasil dihapus')</script>";
+    if (hapusOrderByOrderId($_POST) > 0) {
+        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
     } else {
-        echo "<script>alert('Order gagal dihapus')</script>";
+        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
+
     }
 }
 
 $pelayan = ["Wafda", "Faqih", "Farish"];
-$listOrder = query("SELECT * FROM `order`");
+$listOrder = query("SELECT * FROM `order` ORDER BY id_order DESC");
 
 // Include header
 include("layout/header.php");
@@ -51,7 +64,7 @@ include("layout/header.php");
                     <th>Jam Order</th>
                     <th>Pelayan</th>
                     <th>No Meja</th>
-                    <th style="width: 200px;">Aksi</th>
+                    <th style="width: 250px;">Aksi</th>
                 </tr>
 
                 <?php if (!empty($listOrder)) : ?>
@@ -63,6 +76,7 @@ include("layout/header.php");
                             <td><?= $order["pelayan"] ?></td>
                             <td><?= $order["no_meja"] ?></td>
                             <td>
+                                <a href="detailOrder.php?id_order=<?= $order["id_order"] ?>"><button class="btn btn-info">Detail</button></a>
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $order["id_order"] ?>">Ubah</button>
                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $order["id_order"] ?>">Hapus</button>
                             </td>
@@ -74,7 +88,7 @@ include("layout/header.php");
                                 <div class="modal-content">
                                     <div class="modal-body">
                                         <form action="" method="post">
-                                            <input type="hidden" name="id_order" value="<?= $order["id_order"] ?>">
+                                            <input type="hidden" name="id_order" readonly value="<?= $order["id_order"] ?>">
                                             <div class="mb-3">
                                                 <label for="pelayan" class="form-label">Nama Pelayan</label>
                                                 <select class="form-select" aria-label="Default select example" name="pelayan">
@@ -147,12 +161,24 @@ include("layout/header.php");
                 <div class="modal-body">
                     <div class="mb-3">
                         <?php
-                        // Ambil ID Order terakhir dan tambahkan 1
                         $lastOrder = query("SELECT MAX(id_order) as max_id FROM `order`")[0]['max_id'];
                         $newOrderID = $lastOrder + 1;
                         ?>
                         <label class="form-label">ID Order</label>
                         <input type="text" class="form-control" value="<?= $newOrderID ?>" name="id_order">
+                    </div>
+                    <?php
+                    date_default_timezone_set("Asia/Jakarta");
+                    $tanggal = date("Y-m-d");
+                    $jam = date("H:i:s");
+                    ?>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Order</label>
+                        <input type="text" required class="form-control" value="<?= $tanggal ?>" name="tanggal_order">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Jam Order</label>
+                        <input type="text" required class="form-control" value="<?= $jam ?>" name="jam_order">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Pelayan</label>
