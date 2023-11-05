@@ -3,10 +3,10 @@ include "database.php";
 
 $id_rm = $_GET["id_rm"];
 $rekam_medis = query("SELECT * FROM `tb_rekammedis` WHERE id_rm = '$id_rm'")[0];
-
-$dataPasien = query("SELECT id_pasien, nama_pasien FROM tb_pasien");
-$dataDokter = query("SELECT id_dokter, nama_dokter FROM tb_dokter");
-$dataPoli = query("SELECT id_poli, nama_poli FROM tb_poliklinik");
+$all_rm = query("SELECT * FROM tb_rekammedis
+                JOIN tb_pasien ON tb_pasien.id_pasien = tb_rekammedis.id_pasien
+                JOIN tb_dokter ON tb_dokter.id_dokter = tb_rekammedis.id_dokter
+                JOIN tb_poliklinik ON tb_poliklinik.id_poli = tb_rekammedis.id_poli");
 
 if (isset($_POST["submit"])) : ?>
     <?php if (ubahrm($_POST) > 0) : ?>
@@ -60,7 +60,7 @@ if (isset($_POST["submit"])) : ?>
                         <label for="pasien" class="form-label h6">Pasien</label>
                         <select id="pasien" name="id_pasien" class="form-select" aria-label="Default select example">
                             <option value="" disabled selected>--- Pilih Pasien ---</option>
-                            <?php foreach ($dataPasien as $ps) : ?>
+                            <?php foreach ($all_rm as $ps) : ?>
                                 <option value="<?= $ps["id_pasien"] ?>" <?= ($ps["id_pasien"] == $rekam_medis["id_pasien"]) ? "selected" : "" ?>>
                                     <?= $ps["nama_pasien"] ?>
                                 </option>
@@ -75,7 +75,7 @@ if (isset($_POST["submit"])) : ?>
                         <label for="dokter" class="form-label h6">Dokter</label>
                         <select id="dokter" name="id_dokter" class="form-select" aria-label="Default select example">
                             <option value="" disabled selected>--- Pilih Dokter ---</option>
-                            <?php foreach ($dataDokter as $db) : ?>
+                            <?php foreach ($all_rm as $db) : ?>
                                 <option value="<?= $db["id_dokter"] ?>" <?= ($db["id_dokter"] == $rekam_medis["id_dokter"]) ? "selected" : "" ?>>
                                     <?= $db["nama_dokter"] ?>
                                 </option>
@@ -90,7 +90,7 @@ if (isset($_POST["submit"])) : ?>
                         <label for="poli" class="form-label h6">Poliklinik</label>
                         <select id="poli" name="id_poli" class="form-select" aria-label="Default select example">
                             <option value="" disabled selected>--- Pilih Poliklinik ---</option>
-                            <?php foreach ($dataPoli as $pl) : ?>
+                            <?php foreach ($all_rm as $pl) : ?>
                                 <option value="<?= $pl["id_poli"] ?>" <?= ($pl["id_poli"] == $rekam_medis["id_poli"]) ? "selected" : "" ?>>
                                     <?= $pl["nama_poli"] ?>
                                 </option>
