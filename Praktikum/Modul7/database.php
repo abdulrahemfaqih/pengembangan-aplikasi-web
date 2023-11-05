@@ -27,7 +27,7 @@ function tambah_rekam_medis($data) {
     $id_dokter = htmlspecialchars($data["id_dokter"]);
     $diagnosa = htmlspecialchars($data["diagnosa"]);
     $id_poli = htmlspecialchars($data["id_poli"]);
-    $tanggal = htmlspecialchars($data["tanggal_periksa"]);
+    $tanggal = htmlspecialchars($data["tgl_periksa"]);
 
     mysqli_query($conn, "INSERT INTO `tb_rekammedis`
                 (id_rm, id_pasien, keluhan, id_dokter, diagnosa, id_poli, tgl_periksa)
