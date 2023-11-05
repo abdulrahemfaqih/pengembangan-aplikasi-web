@@ -183,7 +183,7 @@ include("layout/header.php");
                     <div class="mb-3">
                         <label class="form-label">Nama Pelayan</label>
                         <select required class="form-select" name="pelayan">
-                            <option disabled selected>Pilih Pelayan</option>
+                            <option value="" disabled selected>Pilih Pelayan</option>
                             <?php foreach ($pelayan as $sp) : ?>
                                 <option value="<?= $sp ?>"><?= $sp ?></option>
                             <?php endforeach; ?>

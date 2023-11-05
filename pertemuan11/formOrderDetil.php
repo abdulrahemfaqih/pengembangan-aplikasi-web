@@ -35,7 +35,7 @@ if (isset($_POST["batal"])) {
 }
 
 if (isset($_POST["selesai"])) {
-    header("Location: data_order.php");
+    header("Location: detailOrder.php?id_order=".$id_order);
 }
 
 
@@ -70,7 +70,7 @@ $listMenu = query("SELECT * FROM menu ");
                 <tr>
                     <td><label for="menu">Pilih Menu</label></td>
                     <td>
-                        <select class="form-select" name="menu" id="menu">
+                        <select class="form-select" name="menu" id="menu" required>
                             <option value="" disabled selected>--- Pilih Menu ---</option>
                             <?php foreach ($listMenu as $menu) : ?>
                                 <option value="<?= $menu["id_menu"] ?>"><?= $menu["nama"] ?> - <?= $menu["harga"] ?></option>
