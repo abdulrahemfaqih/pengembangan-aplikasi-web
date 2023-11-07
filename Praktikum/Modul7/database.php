@@ -10,18 +10,21 @@ function query($query) {
     }
     return $rows;
 }
-function generateID($table, $kolom,  $length) {
+
+function generateID($table, $kolom, $prefix) {
 
     $lastID = query("SELECT MAX($kolom) as maxID FROM $table")[0];
-    $kode = $lastID["maxID"];
-    $kode++;
-    $result = sprintf("%0" . $length . "s", $kode);
-    return $result;
+    $id = $lastID["maxID"];
+    $urutan = (int)substr($id, 2, 4);
+    $urutan++;
+    $new_id = $prefix . sprintf("%04s", $urutan);
+    return $new_id;
+    return $urutan;
 }
 
 function tambah_rekam_medis($data) {
     global $conn;
-    $id_rm = generateID("tb_rekammedis", "id_rm", 3);
+    $id_rm = $data["id_rm"];
     $id_pasien = htmlspecialchars($data["id_pasien"]);
     $keluhan = htmlspecialchars($data["keluhan"]);
     $id_dokter = htmlspecialchars($data["id_dokter"]);

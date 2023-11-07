@@ -54,6 +54,13 @@ if (isset($_POST["submit"])) : ?>
             <form action="" method="post">
                 <div class="card-body">
                     <div class="mb-3">
+                        <?php
+                        $rm_id = generateID("tb_rekammedis", "id_rm", "RM");
+                        ?>
+                        <label for="id_rm" class="form-label h6">ID RM</label>
+                        <input class="form-control bg-secondary-subtle" readonly type="text" name="id_rm" id="id_rm" value="<?= $rm_id ?>">
+                    </div>
+                    <div class="mb-3">
                         <label for="pasien" class="form-label h6">Pasien</label>
                         <select id="pasien" name="id_pasien" class="form-select" aria-label="Default select example">
                             <option value="" disabled selected>--- Pilih Pasien ---</option>
@@ -94,7 +101,7 @@ if (isset($_POST["submit"])) : ?>
                         $tanggal = date("Y/m/d");
                         ?>
                         <label for="tgl_periksa" class="form-label h6">Tanggal Periksa</label>
-                        <input type="text" readonly class="form-control" name="tgl_periksa" id="tgl_periksa" value="<?= $tanggal ?>">
+                        <input type="text" class="form-control" name="tgl_periksa" id="tgl_periksa" value="<?= $tanggal ?>">
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="submit" name="submit" class="btn btn-success m-2">Simpan</button>
