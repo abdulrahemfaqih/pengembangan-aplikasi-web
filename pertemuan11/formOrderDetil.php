@@ -35,6 +35,7 @@ if (isset($_POST["batal"])) {
 }
 
 if (isset($_POST["selesai"])) {
+    
     header("Location: detailOrder.php?id_order=".$id_order);
 }
 
