@@ -19,8 +19,17 @@ if (isset($_GET["hapus_order_detil"])) {
     $id_order = $_GET["id_order"];
     $id_order_detil = $_GET["hapus_order_detil"];
     hapusOrderDetil($id_order_detil);
-    header("Location: detil_order.php?id_order=".$id_order);
+
+    $order_detail = query("SELECT subtotal FROM order_detil WHERE id_order = $id_order");
+    $total = 0;
+    foreach ($order_detail as $detail) {
+        $total += $detail["subtotal"];
+    }
+    updateTotalBayar($total, $id_order);
+
+    header("Location: detil_order.php?id_order=" . $id_order);
 }
+
 ?>
 <?php include "layout/header.php" ?>
 <div class="container mt-4">
@@ -49,7 +58,7 @@ if (isset($_GET["hapus_order_detil"])) {
                             <td><?= $order["jam_order"] ?></td>
                             <td><?= $order["pelayan"] ?></td>
                             <td><?= $order["no_meja"] ?></td>
-                            <td><?= formatHarga($order["total_bayar"])?></td>
+                            <td><?= formatHarga($order["total_bayar"]) ?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -80,7 +89,7 @@ if (isset($_GET["hapus_order_detil"])) {
                                     <td><?= $order["nama"] ?></td>
                                     <td><?= $order["jenis"] ?></td>
                                     <td><?= formatHarga($order["harga"]) ?></td>
-                                    <td><?= $order["jenis"] ?></td>
+                                    <td><?= $order["jumlah"] ?></td>
                                     <td><?= formatHarga($order["subtotal"]) ?></td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="detil_order.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>" onclick="return confirm('Apakah anda yakin ingin menghapus order detil ini?')">

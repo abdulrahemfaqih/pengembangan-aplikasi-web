@@ -18,7 +18,6 @@ if (isset($_POST["Btambah"])) {
     $pelayan = $_POST["pelayan"];
     if (tambahOrder($_POST) > 0) {
         header("Location: form_order_detil.php?orderId=" . $id_order);
-
     } else {
         echo "<script>alert('Order gagal ditambah')</script>";
     }
@@ -39,12 +38,11 @@ if (isset($_POST["Bhapus"])) {
         echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
     } else {
         echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
-
     }
 }
 
 $pelayan = ["Wafda", "Faqih", "Farish"];
-$listOrder = query("SELECT * FROM `order` ORDER BY id_order DESC");
+
 
 // Include header
 include("layout/header.php");
@@ -66,14 +64,53 @@ include("layout/header.php");
                     <thead class="table-secondary">
                         <tr>
                             <th style="width: 100px;">ID Order</th>
-                            <th>Tanggal Order</th>
-                            <th>Jam Order</th>
+                            <th>
+                                Tanggal Order
+                                <a href="data_order.php?sort_tanggal=<?php echo isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] === "asc" ? "desc" : "asc"; ?>">
+                                    <?php if (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "asc") : ?>
+                                        <i class="fa fa-sort-asc"></i>
+                                    <?php elseif (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "desc") : ?>
+                                        <i class="fa fa-sort-desc"></i>
+                                    <?php else : ?>
+                                        <i class="fa fa-sort"></i>
+                                    <?php endif; ?>
+                                </a>
+                            </th>
+                            <th>
+                                Jam Order
+                                <a href="data_order.php?sort_jam=<?php echo isset($_GET["sort_jam"]) && $_GET["sort_jam"] === "asc" ? "desc" : "asc"; ?>">
+                                    <?php if (isset($_GET["sort_jam"]) && $_GET["sort_jam"] == "asc") : ?>
+                                        <i class="fa fa-sort-asc"></i>
+                                    <?php elseif (isset($_GET["sort_jam"]) && $_GET["sort_jam"] == "desc") : ?>
+                                        <i class="fa fa-sort-desc"></i>
+                                    <?php else : ?>
+                                        <i class="fa fa-sort"></i>
+                                    <?php endif; ?>
+                                </a>
+                            </th>
                             <th>Pelayan</th>
                             <th>No Meja</th>
                             <th>Total Bayar</th>
                             <th style="width: 250px;">Aksi</th>
                         </tr>
                     </thead>
+                    <?php
+                    if (isset($_GET["sort_tanggal"])) {
+                        if ($_GET["sort_tanggal"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY tgl_order ASC");
+                        } else {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY tgl_order DESC");
+                        }
+                    } elseif (isset($_GET["sort_jam"])) {
+                        if ($_GET["sort_jam"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY jam_order ASC");
+                        } else {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY jam_order DESC");
+                        }
+                    } else {
+                        $listOrder = query("SELECT * FROM `order`");
+                    }
+                    ?>
                     <?php if (!empty($listOrder)) : ?>
                         <?php foreach ($listOrder as $order) : ?>
                             <tr>
