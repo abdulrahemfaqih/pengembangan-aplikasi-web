@@ -14,20 +14,45 @@ if (isset($_GET["id_order"])) {
     $no = $order["no_meja"];
 }
 
-if (isset($_GET["hapus"])) {
-    $id_order_detil = $_GET["hapus"];
+
+if (isset($_GET["hapus_order_detil"])) {
+    $id_order = $_GET["id_order"];
+    $id_order_detil = $_GET["hapus_order_detil"];
     hapusOrderDetil($id_order_detil);
-    header("Location: detil_order.php?id_order=" . $id_order);
+    header("Location: detil_order.php?id_order=".$id_order);
 }
 ?>
 <?php include "layout/header.php" ?>
 <div class="container mt-4">
     <div class="card">
-        <h5 class="card-header">Detail Order ID <span class="text-danger"><?= $id_order ?></span></h5>
+        <h5 class="card-header">Detail Order</h5>
         <div class="card-body">
             <div class="d-flex justify-content-end">
-
-                <a href="form_order_detil.php?orderId=<?= $id_order ?>&tanggal=<?= $tanggal ?>&jam=<?= $jam ?>&no=<?= $no ?>&tambahlagi=''" class="btn btn-primary mb-3">Tambah Order Detil</a>
+                <a href="form_order_detil.php?orderId=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary mb-3">Tambah Order Detil</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>ID ORDER</th>
+                            <th>TANGGAL ORDER</th>
+                            <th>JAM ORDER</th>
+                            <th>PELAYAN</th>
+                            <th>NO MEJA</th>
+                            <th>TOTAL BAYAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?= $order["id_order"] ?></td>
+                            <td><?= $order["tgl_order"] ?></td>
+                            <td><?= $order["jam_order"] ?></td>
+                            <td><?= $order["pelayan"] ?></td>
+                            <td><?= $order["no_meja"] ?></td>
+                            <td><?= formatHarga($order["total_bayar"])?></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
@@ -47,33 +72,23 @@ if (isset($_GET["hapus"])) {
                         <tbody>
                             <?php
                             $no = 1;
-                            $total = 0;
                             foreach ($order_detail as $order) :
-                                $total += $order["subtotal"]
                             ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $order["id_order_detil"] ?></td>
                                     <td><?= $order["nama"] ?></td>
-                                    <td><?= $order["nama"] ?></td>
+                                    <td><?= $order["jenis"] ?></td>
                                     <td><?= formatHarga($order["harga"]) ?></td>
                                     <td><?= $order["jenis"] ?></td>
                                     <td><?= formatHarga($order["subtotal"]) ?></td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="detil_order.php?hapus=<?= $order["id_order_detil"] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus order detil ini?')">
+                                        <a class="btn btn-danger btn-sm" href="detil_order.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>" onclick="return confirm('Apakah anda yakin ingin menghapus order detil ini?')">
                                             hapus
                                         </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                            <tr>
-                                <td colspan="6">
-                                    Total
-                                </td>
-                                <td>
-                                    <?= formatHarga($total) ?>
-                                </td>
-                            </tr>
                         <?php else : ?>
                             <tr>
                                 <td colspan="8">Tidak ada Order detil</td>

@@ -1,6 +1,8 @@
 <?php
 require "functions.php";
 
+
+
 $query = "DELETE FROM `order` WHERE id_order NOT IN (SELECT id_order FROM order_detil)";
 $result = mysqli_query($conn, $query);
 if (!$result) {
@@ -15,7 +17,7 @@ if (isset($_POST["Btambah"])) {
     $no_meja = $_POST["no_meja"];
     $pelayan = $_POST["pelayan"];
     if (tambahOrder($_POST) > 0) {
-        header("Location: form_order_detil.php?orderId=" . $id_order . "&tanggal=" . $tanggal_order . "&jam=" . $jam_order . "&no=" . $no_meja);
+        header("Location: form_order_detil.php?orderId=" . $id_order);
 
     } else {
         echo "<script>alert('Order gagal ditambah')</script>";
@@ -54,20 +56,24 @@ include("layout/header.php");
             <h5>Data Order</h5>
         </div>
         <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                Tambah Order
-            </button>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                    Tambah Order
+                </button>
+            </div>
             <div class="table table-responsive">
                 <table class="table table-bordered table-hover">
-                    <tr>
-                        <th style="width: 100px;">ID Order</th>
-                        <th>Tanggal Order</th>
-                        <th>Jam Order</th>
-                        <th>Pelayan</th>
-                        <th>No Meja</th>
-                        <th>Total Bayar</th>
-                        <th style="width: 250px;">Aksi</th>
-                    </tr>
+                    <thead class="table-secondary">
+                        <tr>
+                            <th style="width: 100px;">ID Order</th>
+                            <th>Tanggal Order</th>
+                            <th>Jam Order</th>
+                            <th>Pelayan</th>
+                            <th>No Meja</th>
+                            <th>Total Bayar</th>
+                            <th style="width: 250px;">Aksi</th>
+                        </tr>
+                    </thead>
                     <?php if (!empty($listOrder)) : ?>
                         <?php foreach ($listOrder as $order) : ?>
                             <tr>

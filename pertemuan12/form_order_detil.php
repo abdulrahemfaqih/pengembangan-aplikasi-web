@@ -2,12 +2,13 @@
 require("functions.php");
 
 
-if (isset($_GET["orderId"]) || isset($_GET["tanggal"]) || isset($_GET["jam"]) || isset($_GET["no"])) {
-
+if (isset($_GET["orderId"]) ) {
     $id_order = $_GET["orderId"];
-    $tanggal = $_GET["tanggal"];
-    $jam = $_GET["jam"];
-    $no = $_GET["no"];
+    $data_order_id = query("SELECT * FROM `order` WHERE id_order = $id_order")[0];
+    $tanggal = $data_order_id["tgl_order"];
+    $jam = $data_order_id["jam_order"];
+    $no_meja = $data_order_id["no_meja"];
+    $total_bayar = $data_order_id["total_bayar"];
 }
 
 if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu"])) {
@@ -27,12 +28,14 @@ if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu
         $total += $subtotal["subtotal"];
     }
     updateTotalBayar($total, $id_order);
+    $total_bayar = query("SELECT total_bayar FROM `order` WHERE id_order = $id_order")[0];
+    $total_bayar = $total_bayar["total_bayar"];
 }
 
 if (isset($_GET["id_order_detil"])) {
     $id_order_detil = $_GET["id_order_detil"];
     hapusOrderDetil($id_order_detil);
-    header("Location: form_order_detil.php?orderId=" . $id_order . "&tanggal=" . $tanggal . "&jam=" . $jam . "&no=" . $no);
+    header("Location: form_order_detil.php?orderId=" . $id_order);
 }
 
 if (isset($_POST["batal"])) {
@@ -48,88 +51,101 @@ if (isset($_POST["selesai"])) {
 $listMenu = query("SELECT * FROM menu ");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Order Detail</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-<body>
-
+<?php include "layout/header.php" ?>
     <div class="container">
         <div class="card my-4">
-            <h5 class="card-header bg-primary">Form Order Detil</h5>
+            <h5 class="card-header">Form Order Detil</h5>
             <div class="card-body">
-                <div class="transaksiid">
-                    <P>ID Order: <?= $id_order ?></P>
-                    <P>Tanggal Order : <?= $tanggal ?></P>
-                    <P>Jam Order : <?= $jam ?></P>
-                    <p>No Meja : <?= $no ?></p>
+                <div class="table table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>ID ORDER</th>
+                                <th>TANGGAL ORDER</th>
+                                <th>JAM ORDER</th>
+                                <th>NO MEJA</th>
+                                <th>TOTAL BAYAR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?= $id_order ?></td>
+                                <td><?= $tanggal ?></td>
+                                <td><?= $jam ?></td>
+                                <td><?= $no_meja ?></td>
+                                <td><?= formatHarga($total_bayar) ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <form action="" method="post">
-                    <table class="table table-responsive table-bordered border border-secondary">
-                        <tr>
-                            <td><label for="menu">Pilih Menu</label></td>
-                            <td>
-                                <select class="form-select" name="menu" id="menu">
-                                    <option value="" disabled selected>--- Pilih Menu ---</option>
-                                    <?php foreach ($listMenu as $menu) : ?>
-                                        <option value="<?= $menu["id_menu"] ?>"><?= $menu["nama"] ?> - <?= $menu["harga"] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                            <td>
-                                <input class="form-control" type="number" name="jumlah" value="1" min="1">
-                            </td>
-                            <td colspan="2">
-                                <button style="display: flex; justify-content: center;" class="btn btn-primary" type="submit" name="tambahMenu">Tambah</button>
-                            </td>
-                        </tr>
-                    </table>
+                    <p class="fw-bold text-primary">FORM TAMBAH MENU</p>
                     <div class="table table-responsive">
-                        <table class="table  table-bordered border border-secondary">
+                        <table class="table table-responsive table-bordered">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>PILIH MENU</th>
+                                    <th>JUMLAH</th>
+                                    <th>AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-select" name="menu" id="menu">
+                                            <option value="" disabled selected>--- Pilih Menu ---</option>
+                                            <?php foreach ($listMenu as $menu) : ?>
+                                                <option value="<?= $menu["id_menu"] ?>"><?= $menu["nama"] ?> - <?= $menu["harga"] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" name="jumlah" value="1" min="1">
+                                    </td>
+                                    <td colspan="2">
+                                        <button  class="btn btn-primary" type="submit" name="tambahMenu">Tambah</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="fw-bold text-success">MENU YANG BARU DITAMBAHKAN</p>
+                    <div class="table table-responsive">
+                        <table class="table  table-bordered">
                             <?php
-                            $query = "SELECT  order_detil.id_order_detil, order_detil.id_order, order_detil.id_menu, menu.nama, menu.harga, order_detil.jumlah
+                            $data_order_detil = query("SELECT  order_detil.id_order_detil, order_detil.id_order, order_detil.subtotal, order_detil.id_menu, menu.nama, menu.harga, order_detil.jumlah
                             FROM order_detil
                             LEFT JOIN menu ON menu.id_menu = order_detil.id_menu
                             WHERE order_detil.id_order = $id_order
-                            ORDER BY order_detil.id_order";
-                            $result = mysqli_query($conn, $query);
-                            if (!$result) {
-                                echo "Query gagal: " . mysqli_error($conn);
-                            }
-                            if (mysqli_num_rows($result) > 0) : ?>
-                                <tr>
-                                    <th>ID ORDER DETIL</th>
-                                    <th>Nama Menu</th>
-                                    <th style="width: 300px;">Jumlah</th>
-                                    <th style="width: 200px;">Harga Satuan</th>
-                                    <th>Sub Total</th>
-                                    <th>Aksi</th>
-                                </tr>
-                                <?php
-                                $total = 0;
-                                while ($row = mysqli_fetch_assoc($result)) :
-                                    $subTotal =  $row["jumlah"] * $row["harga"];
-                                    $total += $subTotal;
-                                ?>
+                            ORDER BY order_detil.id_order");
+                            if (!empty($data_order_detil)) : ?>
+                                <thead class="table-secondary">
                                     <tr>
-                                        <td><?= $row["id_order_detil"] ?></td>
-                                        <td><?= $row["nama"] ?></td>
-                                        <td><?= $row["jumlah"] ?></td>
-                                        <td><?= formatHarga($row["harga"]) ?></td>
-                                        <td><?= formatHarga($subTotal) ?></td>
-                                        <td><a class="btn btn-danger" href="form_order_detil.php?orderId=<?= $id_order ?>&tanggal=<?= $tanggal ?>&jam=<?= $jam ?>&no=<?= $no ?>&id_order_detil=<?= $row["id_order_detil"] ?>">Hapus</a></td>
+                                        <th>ID ORDER DETIL</th>
+                                        <th>NAMA MENU</th>
+                                        <th>JUMLAH</th>
+                                        <th>HARGA SATUAN</th>
+                                        <th>SUBTOTAL</th>
+                                        <th>AKSI</th>
                                     </tr>
-                                <?php endwhile; ?>
-                                <tr>
-                                    <td colspan="4">Total :</td>
-                                    <td><?= formatHarga($total) ?></td>
-                                </tr>
+                                </thead>
+                                <?php
+                                foreach ($data_order_detil as $detil) :
+                                ?>
+                                    <tbody>
+                                        <tr>
+                                            <td><?= $detil["id_order_detil"] ?></td>
+                                            <td><?= $detil["nama"] ?></td>
+                                            <td><?= $detil["jumlah"] ?></td>
+                                            <td><?= formatHarga($detil["harga"]) ?></td>
+                                            <td><?= formatHarga($detil["subtotal"]) ?></td>
+                                            <td>
+                                               <a class="btn btn-danger" href="form_order_detil.php?orderId=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                <?php endforeach;; ?>
                             <?php endif; ?>
                         </table>
                     </div>
@@ -140,8 +156,5 @@ $listMenu = query("SELECT * FROM menu ");
                 </form>
             </div>
         </div>
-
     </div>
-</body>
-
-</html>
+<?php include "layout/footer.php" ?>
