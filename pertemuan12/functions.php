@@ -9,7 +9,6 @@ $conn = mysqli_connect($server, $username, $password, $database);
 
 if (!$conn) {
     die("Koneksi gagal : " . mysqli_connect_error($conn));
-} else {
 }
 
 
@@ -83,8 +82,8 @@ function tambahOrder($data)
     $namaPelayan = htmlspecialchars($data["pelayan"]);
     $noMeja = htmlspecialchars($data["no_meja"]);
 
-    $query = "INSERT INTO `order` (id_order, tgl_order, jam_order, pelayan, no_meja)
-              VALUES ('$id_order', '$tanggal', '$jam', '$namaPelayan', '$noMeja')";
+    $query = "INSERT INTO `order` (id_order, tgl_order, jam_order, pelayan, no_meja, total_bayar)
+              VALUES ('$id_order', '$tanggal', '$jam', '$namaPelayan', '$noMeja', 0)";
 
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
