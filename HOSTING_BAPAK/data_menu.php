@@ -18,16 +18,10 @@ if (isset($_POST["Bubah"])) {
 }
 // hapus
 if (isset($_POST["Bhapus"])) {
-    $id_menu = $_POST["id_menu"];
-    $orderDetailCount = query("SELECT COUNT(id_menu) AS jumlah FROM order_detil WHERE id_menu = $id_menu ")[0];
-    if ($orderDetailCount["jumlah"]  > 0) {
-        echo "<script>alert('Menu tidak dapat dihapus karena masih digunakan dalam order detail.')</script>";
+    if (hapusMenu($_POST) > 0) {
+        echo "<script>alert('Menu berhasil dihapus')</script>";
     } else {
-        if (hapusMenu($id_menu) > 0) {
-            echo "<script>alert('Menu berhasil dihapus')</script>";
-        } else {
-            echo "<script>alert('Menu gagal dihapus')</script>";
-        }
+        echo "<script>alert('Menu gagal dihapus')</script>";
     }
 }
 ?>
@@ -48,39 +42,34 @@ if (isset($_POST["Bhapus"])) {
                 <table class="table table-bordered table-hover">
                     <thead class="table-secondary">
                         <tr>
-                            <th>NO.</th>
-                            <th>ID MENU</th>
+                            <th>No.</th>
+                            <th>ID Menu</th>
                             <th>
-                                <div class="d-flex justify-content-between">
-                                    <span>NAMA MENU</span>
-                                    <a href="data_menu.php?sortName=<?php echo isset($_GET["sortName"]) && $_GET["sortName"] === "asc" ? "desc" : "asc"; ?>">
-                                        <?php if (isset($_GET["sortName"]) && $_GET["sortName"] == "asc") : ?>
-                                            <i class="fa fa-sort-asc"></i>
-                                        <?php elseif (isset($_GET["sortName"]) && $_GET["sortName"] == "desc") : ?>
-                                            <i class="fa fa-sort-desc"></i>
-                                        <?php else : ?>
-                                            <i class="fa fa-sort"></i>
-                                        <?php endif; ?>
-                                    </a>
-                                </div>
+                                Nama Menu
+                                <a href="data_menu.php?sortName=<?php echo isset($_GET["sortName"]) && $_GET["sortName"] === "asc" ? "desc" : "asc"; ?>">
+                                    <?php if (isset($_GET["sortName"]) && $_GET["sortName"] == "asc") : ?>
+                                        <i class="fa fa-sort-asc"></i>
+                                    <?php elseif (isset($_GET["sortName"]) && $_GET["sortName"] == "desc") : ?>
+                                        <i class="fa fa-sort-desc"></i>
+                                    <?php else : ?>
+                                        <i class="fa fa-sort"></i>
+                                    <?php endif; ?>
+                                </a>
                             </th>
-                            <th>JENIS MENU</th>
-                            <th>STOK</th>
+                            <th>Jenis Menu</th>
                             <th>
-                                <div class="d-flex justify-content-between">
-                                    <span>HARGA MENU</span>
-                                    <a href="data_menu.php?sortHarga=<?php echo isset($_GET["sortHarga"]) && $_GET["sortHarga"] === "asc" ? "desc" : "asc"; ?>">
-                                        <?php if (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "asc") : ?>
-                                            <i class="fa fa-sort-asc"></i>
-                                        <?php elseif (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "desc") : ?>
-                                            <i class="fa fa-sort-desc"></i>
-                                        <?php else : ?>
-                                            <i class="fa fa-sort"></i>
-                                        <?php endif; ?>
-                                    </a>
-                                </div>
+                                Harga Menu
+                                <a href="data_menu.php?sortHarga=<?php echo isset($_GET["sortHarga"]) && $_GET["sortHarga"] === "asc" ? "desc" : "asc"; ?>">
+                                    <?php if (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "asc") : ?>
+                                        <i class="fa fa-sort-asc"></i>
+                                    <?php elseif (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "desc") : ?>
+                                        <i class="fa fa-sort-desc"></i>
+                                    <?php else : ?>
+                                        <i class="fa fa-sort"></i>
+                                    <?php endif; ?>
+                                </a>
                             </th>
-                            <th>AKSI</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <?php
@@ -107,7 +96,6 @@ if (isset($_POST["Bhapus"])) {
                                 <td><?= $menu["id_menu"] ?></td>
                                 <td><?= $menu["nama"] ?></td>
                                 <td><?= $menu["jenis"] ?></td>
-                                <td><?= $menu["stok"] ?></td>
                                 <td><?= formatHarga($menu["harga"]) ?></td>
                                 <td>
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $menu["id_menu"] ?>">Ubah</button>
@@ -126,7 +114,7 @@ if (isset($_POST["Bhapus"])) {
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_menu" value="<?= $menu["id_menu"] ?>">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Nama Menu</label>
+                                                    <label for="exampleFormControlInput1" class="form-label">Nama Menu</label>
                                                     <input type="text" class="form-control" placeholder="inputkan nama product" value="<?= $menu["nama"] ?> " name="nama">
                                                 </div>
                                                 <div class="mb-3">
@@ -137,12 +125,8 @@ if (isset($_POST["Bhapus"])) {
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">Harga Menu</label>
+                                                    <label for="exampleFormControlInput1" class="form-label">Harga Menu</label>
                                                     <input type="number" class="form-control" placeholder="inputkan harga produk" value="<?= $menu["harga"] ?>" name="harga">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Stok Menu</label>
-                                                    <input type="number" class="form-control" placeholder="inputkan harga produk" value="<?= $menu["stok"] ?>" name="stok">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -166,7 +150,7 @@ if (isset($_POST["Bhapus"])) {
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_menu" value="<?= $menu["id_menu"] ?>">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Nama Menu</label>
+                                                    <label for="exampleFormControlInput1" class="form-label">Nama Menu</label>
                                                     <input disabled type="text" class="form-control" value="<?= $menu["nama"] ?>" name="nama">
                                                 </div>
                                             </div>
@@ -196,7 +180,7 @@ if (isset($_POST["Bhapus"])) {
                         <form action="" method="post">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label class="form-label">Nama Menu</label>
+                                    <label for="exampleFormControlInput1" class="form-label">Nama Menu</label>
                                     <input type="text" required class="form-control" placeholder="inputkan nama menu" name="nama">
                                 </div>
                                 <div class="mb-3">
@@ -208,7 +192,7 @@ if (isset($_POST["Bhapus"])) {
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Harga Menu</label>
+                                    <label for="exampleFormControlInput1" class="form-label">Harga Menu</label>
                                     <input type="number" required class="form-control" placeholder="inputkan harga menu" name="harga">
                                 </div>
                             </div>
