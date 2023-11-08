@@ -9,6 +9,8 @@ if (!$result) {
     echo "query gagal : " . mysqli_error($conn);
 }
 
+
+
 // tambah
 if (isset($_POST["Btambah"])) {
     $id_order = $_POST["id_order"];
@@ -23,21 +25,14 @@ if (isset($_POST["Btambah"])) {
     }
 }
 
-// ubah
-if (isset($_POST["Bubah"])) {
-    if (editOrder($_POST) > 0) {
-        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
-    } else {
-        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
-    }
-}
+
 
 // hapus
 if (isset($_POST["Bhapus"])) {
     if (hapusOrderByOrderId($_POST["id_order"]) > 0) {
-        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
+        header("Location: data_order.php");
     } else {
-        echo "<meta http-equiv=refresh content=1;URL='data_order.php'>";
+        header("Location: data_order.php");
     }
 }
 
@@ -63,35 +58,82 @@ include("layout/header.php");
                 <table class="table table-bordered table-hover">
                     <thead class="table-secondary">
                         <tr>
-                            <th style="width: 100px;">ID Order</th>
                             <th>
-                                Tanggal Order
-                                <a href="data_order.php?sort_tanggal=<?php echo isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] === "asc" ? "desc" : "asc"; ?>">
-                                    <?php if (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "asc") : ?>
-                                        <i class="fa fa-sort-asc"></i>
-                                    <?php elseif (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "desc") : ?>
-                                        <i class="fa fa-sort-desc"></i>
-                                    <?php else : ?>
-                                        <i class="fa fa-sort"></i>
-                                    <?php endif; ?>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <span>ID ORDER</span>
+                                    <a href="data_order.php?sort_id_order=<?php echo isset($_GET["sort_id_order"]) && $_GET["sort_id_order"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sort_id_order"]) && $_GET["sort_id_order"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sort_id_order"]) && $_GET["sort_id_order"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
                             </th>
                             <th>
-                                Jam Order
-                                <a href="data_order.php?sort_jam=<?php echo isset($_GET["sort_jam"]) && $_GET["sort_jam"] === "asc" ? "desc" : "asc"; ?>">
-                                    <?php if (isset($_GET["sort_jam"]) && $_GET["sort_jam"] == "asc") : ?>
-                                        <i class="fa fa-sort-asc"></i>
-                                    <?php elseif (isset($_GET["sort_jam"]) && $_GET["sort_jam"] == "desc") : ?>
-                                        <i class="fa fa-sort-desc"></i>
-                                    <?php else : ?>
-                                        <i class="fa fa-sort"></i>
-                                    <?php endif; ?>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <span>TANGGAL ORDER</span>
+                                    <a href="data_order.php?sort_tanggal=<?php echo isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sort_tanggal"]) && $_GET["sort_tanggal"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
                             </th>
-                            <th>Pelayan</th>
-                            <th>No Meja</th>
-                            <th>Total Bayar</th>
-                            <th style="width: 250px;">Aksi</th>
+                            <th>
+                                JAM ORDER
+                            </th>
+                            <th>PELAYAN</th>
+                            <th>
+                                <div class="d-flex justify-content-between">
+                                    <span>NO MEJA</span>
+                                    <a href="data_order.php?sort_no_meja=<?php echo isset($_GET["sort_no_meja"]) && $_GET["sort_no_meja"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sort_no_meja"]) && $_GET["sort_no_meja"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sort_no_meja"]) && $_GET["sort_no_meja"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="d-flex justify-content-between">
+                                    <span>TOTAL BAYAR</span>
+                                    <a href="data_order.php?sort_total_bayar=<?php echo isset($_GET["sort_total_bayar"]) && $_GET["sort_total_bayar"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sort_total_bayar"]) && $_GET["sort_total_bayar"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sort_total_bayar"]) && $_GET["sort_total_bayar"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="d-flex justify-content-between">
+                                    <span>STATUS ORDER</span>
+                                    <a href="data_order.php?sort_status_order=<?php echo isset($_GET["sort_status_order"]) && $_GET["sort_status_order"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sort_status_order"]) && $_GET["sort_status_order"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sort_status_order"]) && $_GET["sort_status_order"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
+
+                            </th>
+                            <th style="width: 250px;">AKSI</th>
                         </tr>
                     </thead>
                     <?php
@@ -101,13 +143,31 @@ include("layout/header.php");
                         } else {
                             $listOrder = query("SELECT * FROM `order` ORDER BY tgl_order DESC");
                         }
-                    } elseif (isset($_GET["sort_jam"])) {
-                        if ($_GET["sort_jam"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY jam_order ASC");
+                    } else if (isset($_GET["sort_no_meja"])) {
+                        if ($_GET["sort_no_meja"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY no_meja ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY jam_order DESC");
+                            $listOrder = query("SELECT * FROM `order` ORDER BY no_meja DESC");
                         }
-                    } else {
+                    } else if (isset($_GET["sort_total_bayar"])) {
+                        if ($_GET["sort_total_bayar"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY total_bayar ASC");
+                        } else {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY total_bayar DESC");
+                        }
+                    } else if (isset($_GET["sort_id_order"])) {
+                        if ($_GET["sort_id_order"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY id_order ASC");
+                        } else {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY id_order DESC");
+                        }
+                    } else if (isset($_GET["sort_status_order"])) {
+                        if ($_GET["sort_status_order"] == "asc") {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY status_order ASC");
+                        } else {
+                            $listOrder = query("SELECT * FROM `order` ORDER BY status_order DESC");
+                        }
+                    }  else {
                         $listOrder = query("SELECT * FROM `order`");
                     }
                     ?>
@@ -120,9 +180,9 @@ include("layout/header.php");
                                 <td><?= $order["pelayan"] ?></td>
                                 <td><?= $order["no_meja"] ?></td>
                                 <td><?= formatHarga($order["total_bayar"]) ?></td>
+                                <td><?= $order["status_order"] ?></td>
                                 <td>
-                                    <a href="detil_order.php?id_order=<?= $order["id_order"] ?>"><button class="btn btn-info">Detail</button></a>
-                                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $order["id_order"] ?>">Ubah</button>
+                                    <a href="detil_order.php?id_order=<?= $order["id_order"] ?>"><button class="btn btn-info">Detail Order</button></a>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $order["id_order"] ?>">Hapus</button>
                                 </td>
                             </tr>
@@ -217,7 +277,7 @@ include("layout/header.php");
                     ?>
                     <div class="mb-3">
                         <label class="form-label">Tanggal Order</label>
-                        <input type="text" required class="form-control" readonly value="<?= $tanggal ?>" name="tanggal_order">
+                        <input type="text" required class="form-control" value="<?= $tanggal ?>" name="tanggal_order">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jam Order</label>

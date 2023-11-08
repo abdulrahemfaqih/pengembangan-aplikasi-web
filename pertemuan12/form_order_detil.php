@@ -22,12 +22,7 @@ if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu
             echo "menu gagal ditambahkan";
         }
     }
-    $getSubTotal = query("SELECT subtotal FROM `order_detil` WHERE id_order = $id_order");
-    $total = 0;
-    foreach ($getSubTotal as $subtotal) {
-        $total += $subtotal["subtotal"];
-    }
-    updateTotalBayar($total, $id_order);
+    updateTotalBayar($id_order);
     $total_bayar = query("SELECT total_bayar FROM `order` WHERE id_order = $id_order")[0];
     $total_bayar = $total_bayar["total_bayar"];
 }
@@ -35,15 +30,7 @@ if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu
 if (isset($_GET["id_order_detil"])) {
     $id_order_detil = $_GET["id_order_detil"];
     hapusOrderDetil($id_order_detil);
-
-    // Hitung ulang total bayar setelah menghapus item
-    $getSubTotal = query("SELECT subtotal FROM `order_detil` WHERE id_order = $id_order");
-    $total = 0;
-    foreach ($getSubTotal as $subtotal) {
-        $total += $subtotal["subtotal"];
-    }
-    // Update total bayar di database
-    updateTotalBayar($total, $id_order);
+    updateTotalBayar($id_order);
 
     header("Location: form_order_detil.php?orderId=" . $id_order);
 }

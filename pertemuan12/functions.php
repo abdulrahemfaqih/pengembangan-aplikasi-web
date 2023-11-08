@@ -60,11 +60,10 @@ function editMenu(array $data): int
     return mysqli_affected_rows($conn);
 }
 
-function hapusMenu(array $data): int
+function hapusMenu($id_menu)
 {
     global $conn;
-    $id = $_POST["id_menu"];
-    mysqli_query($conn, "DELETE FROM menu WHERE id_menu = $id");
+    mysqli_query($conn, "DELETE FROM menu WHERE id_menu = $id_menu");
     return mysqli_affected_rows($conn);
 }
 
@@ -97,24 +96,6 @@ function hapusOrderByOrderId($id_order)
 }
 
 
-
-function editOrder(array $data)
-{
-    global $conn;
-    $id = $_POST["id_order"];
-    $pelayan = htmlspecialchars($data["pelayan"]);
-    $noMeja = htmlspecialchars($data["no_meja"]);
-
-    $query = "UPDATE `order` SET
-                pelayan = '$pelayan',
-                no_meja = '$noMeja'
-            WHERE id_order = $id";
-
-    mysqli_query($conn, $query);
-
-    return mysqli_affected_rows($conn);
-}
-
 function tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal)
 {
     global $conn;
@@ -139,19 +120,27 @@ function hapusOrderDetil($id_order_detil)
     return mysqli_affected_rows($conn);
 }
 
-function updateTotalBayar($total_bayar, $id_order)
+function updateStatusDetilOrder($id_order_detil, $status)
 {
     global $conn;
-    mysqli_query($conn, "UPDATE `order` SET total_bayar = '$total_bayar' WHERE id_order = $id_order");
+    mysqli_query($conn, "UPDATE `order_detil` SET status_order_detil = '$status' WHERE id_order_detil = $id_order_detil");
     return mysqli_affected_rows($conn);
 }
 
+function updateTotalBayar($id_order)
+{
+    global $conn;
+    mysqli_query($conn, "UPDATE `order` SET total_bayar = (SELECT sum(subtotal) FROM order_detil WHERE id_order = $id_order) WHERE id_order = $id_order");
+
+    return mysqli_affected_rows($conn);
 
 
+}
 
-
-
-
+function updateStatusOrder($id_order, $keterangan_status) {
+    global $conn;
+    mysqli_query($conn, "UPDATE `order` SET status_order = '$keterangan_status' WHERE id_order = $id_order");
+}
 
 
 function formatHarga(float|int|string $harga): int|float|string

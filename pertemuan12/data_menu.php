@@ -18,10 +18,16 @@ if (isset($_POST["Bubah"])) {
 }
 // hapus
 if (isset($_POST["Bhapus"])) {
-    if (hapusMenu($_POST) > 0) {
-        echo "<script>alert('Menu berhasil dihapus')</script>";
+    $id_menu = $_POST["id_menu"];
+    $orderDetailCount = query("SELECT COUNT(id_menu) AS jumlah FROM order_detil WHERE id_menu = $id_menu ")[0];
+    if ($orderDetailCount["jumlah"]  > 0) {
+        echo "<script>alert('Menu tidak dapat dihapus karena masih digunakan dalam order detail.')</script>";
     } else {
-        echo "<script>alert('Menu gagal dihapus')</script>";
+        if (hapusMenu($id_menu) > 0) {
+            echo "<script>alert('Menu berhasil dihapus')</script>";
+        } else {
+            echo "<script>alert('Menu gagal dihapus')</script>";
+        }
     }
 }
 ?>
@@ -42,34 +48,39 @@ if (isset($_POST["Bhapus"])) {
                 <table class="table table-bordered table-hover">
                     <thead class="table-secondary">
                         <tr>
-                            <th>No.</th>
-                            <th>ID Menu</th>
+                            <th>NO.</th>
+                            <th>ID MENU</th>
                             <th>
-                                Nama Menu
-                                <a href="data_menu.php?sortName=<?php echo isset($_GET["sortName"]) && $_GET["sortName"] === "asc" ? "desc" : "asc"; ?>">
-                                    <?php if (isset($_GET["sortName"]) && $_GET["sortName"] == "asc") : ?>
-                                        <i class="fa fa-sort-asc"></i>
-                                    <?php elseif (isset($_GET["sortName"]) && $_GET["sortName"] == "desc") : ?>
-                                        <i class="fa fa-sort-desc"></i>
-                                    <?php else : ?>
-                                        <i class="fa fa-sort"></i>
-                                    <?php endif; ?>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <span>NAMA MENU</span>
+                                    <a href="data_menu.php?sortName=<?php echo isset($_GET["sortName"]) && $_GET["sortName"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sortName"]) && $_GET["sortName"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sortName"]) && $_GET["sortName"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
                             </th>
-                            <th>Jenis Menu</th>
+                            <th>JENIS MENU</th>
+                            <th>STOK</th>
                             <th>
-                                Harga Menu
-                                <a href="data_menu.php?sortHarga=<?php echo isset($_GET["sortHarga"]) && $_GET["sortHarga"] === "asc" ? "desc" : "asc"; ?>">
-                                    <?php if (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "asc") : ?>
-                                        <i class="fa fa-sort-asc"></i>
-                                    <?php elseif (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "desc") : ?>
-                                        <i class="fa fa-sort-desc"></i>
-                                    <?php else : ?>
-                                        <i class="fa fa-sort"></i>
-                                    <?php endif; ?>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <span>HARGA MENU</span>
+                                    <a href="data_menu.php?sortHarga=<?php echo isset($_GET["sortHarga"]) && $_GET["sortHarga"] === "asc" ? "desc" : "asc"; ?>">
+                                        <?php if (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "asc") : ?>
+                                            <i class="fa fa-sort-asc"></i>
+                                        <?php elseif (isset($_GET["sortHarga"]) && $_GET["sortHarga"] == "desc") : ?>
+                                            <i class="fa fa-sort-desc"></i>
+                                        <?php else : ?>
+                                            <i class="fa fa-sort"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
                             </th>
-                            <th>Aksi</th>
+                            <th>AKSI</th>
                         </tr>
                     </thead>
                     <?php
@@ -96,6 +107,7 @@ if (isset($_POST["Bhapus"])) {
                                 <td><?= $menu["id_menu"] ?></td>
                                 <td><?= $menu["nama"] ?></td>
                                 <td><?= $menu["jenis"] ?></td>
+                                <td><?= $menu["stok"] ?></td>
                                 <td><?= formatHarga($menu["harga"]) ?></td>
                                 <td>
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $menu["id_menu"] ?>">Ubah</button>
