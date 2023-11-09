@@ -1,6 +1,7 @@
 <?php
 require "functions.php";
 
+$getPelayan = query("SELECT * FROM pelayan");
 
 
 $query = "DELETE FROM `order` WHERE id_order NOT IN (SELECT id_order FROM order_detil)";
@@ -13,10 +14,6 @@ if (!$result) {
 // tambah
 if (isset($_POST["Btambah"])) {
     $id_order = $_POST["id_order"];
-    $tanggal_order = $_POST["tanggal_order"];
-    $jam_order = $_POST["jam_order"];
-    $no_meja = $_POST["no_meja"];
-    $pelayan = $_POST["pelayan"];
     if (tambahOrder($_POST) > 0) {
         header("Location: form_order_detil.php?orderId=" . $id_order);
     } else {
@@ -35,10 +32,9 @@ if (isset($_POST["Bhapus"])) {
     }
 }
 
-$pelayan = ["Wafda", "Faqih", "Farish"];
 
 
-// Include header
+$title = "DATA ORDER";
 include("layout/header.php");
 ?>
 
@@ -141,36 +137,36 @@ include("layout/header.php");
                     <?php
                     if (isset($_GET["sort_tanggal"])) {
                         if ($_GET["sort_tanggal"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY tgl_order ASC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY tgl_order ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY tgl_order DESC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY tgl_order DESC");
                         }
                     } else if (isset($_GET["sort_no_meja"])) {
                         if ($_GET["sort_no_meja"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY no_meja ASC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY no_meja ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY no_meja DESC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY no_meja DESC");
                         }
                     } else if (isset($_GET["sort_total_bayar"])) {
                         if ($_GET["sort_total_bayar"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY total_bayar ASC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY total_bayar ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY total_bayar DESC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY total_bayar DESC");
                         }
                     } else if (isset($_GET["sort_id_order"])) {
                         if ($_GET["sort_id_order"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY id_order ASC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY id_order ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY id_order DESC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY id_order DESC");
                         }
                     } else if (isset($_GET["sort_status_order"])) {
                         if ($_GET["sort_status_order"] == "asc") {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY status_order ASC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY status_order ASC");
                         } else {
-                            $listOrder = query("SELECT * FROM `order` ORDER BY status_order DESC");
+                            $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan ORDER BY status_order DESC");
                         }
                     } else {
-                        $listOrder = query("SELECT * FROM `order`");
+                        $listOrder = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan");
                     }
                     ?>
                     <?php $no = 1;
@@ -181,7 +177,7 @@ include("layout/header.php");
                                 <td><?= $order["id_order"] ?></td>
                                 <td><?= $order["tgl_order"] ?></td>
                                 <td><?= $order["jam_order"] ?></td>
-                                <td><?= $order["pelayan"] ?></td>
+                                <td><?= $order["nama_pelayan"] ?></td>
                                 <td><?= $order["no_meja"] ?></td>
                                 <td><?= formatHarga($order["total_bayar"]) ?></td>
                                 <td><?= $order["status_order"] ?></td>
@@ -190,35 +186,6 @@ include("layout/header.php");
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $order["id_order"] ?>">Hapus</button>
                                 </td>
                             </tr>
-                            <!-- Modal Ubah -->
-                            <div class="modal fade" id="modalUbah<?= $order["id_order"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <form action="" method="post">
-                                                <input type="hidden" name="id_order" readonly value="<?= $order["id_order"] ?>">
-                                                <div class="mb-3">
-                                                    <label for="pelayan" class="form-label">Nama Pelayan</label>
-                                                    <select class="form-select" aria-label="Default select example" name="pelayan">
-                                                        <?php foreach ($pelayan as $sp) : ?>
-                                                            <option value="<?= $sp ?>" <?= ($order['pelayan'] == $sp) ? 'selected' : ''; ?>><?= $sp ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="no_meja" class="form-label">No Meja</label>
-                                                    <input type="number" required class="form-control" value="<?= $order["no_meja"] ?>" name="no_meja">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" name="Bubah">Ubah</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Modal Ubah -->
                             <!-- Modal Hapus -->
                             <div class="modal fade" id="modalHapus<?= $order["id_order"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -247,7 +214,7 @@ include("layout/header.php");
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="6" style="text-align: center; font-weight: bold;">Tidak ada data order</td>
+                            <td colspan="9" style="text-align: center; font-weight: bold;">Tidak ada data order</td>
                         </tr>
                     <?php endif; ?>
                 </table>
@@ -289,10 +256,10 @@ include("layout/header.php");
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Pelayan</label>
-                        <select required class="form-select" name="pelayan">
+                        <select required class="form-select" name="id_pelayan">
                             <option value="" disabled selected>Pilih Pelayan</option>
-                            <?php foreach ($pelayan as $sp) : ?>
-                                <option value="<?= $sp ?>"><?= $sp ?></option>
+                            <?php foreach ($getPelayan as $pelayan) : ?>
+                                <option value="<?= $pelayan["id_pelayan"] ?>"><?= $pelayan["nama_pelayan"] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

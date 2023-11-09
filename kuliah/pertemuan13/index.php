@@ -1,4 +1,7 @@
-<?php include "layout/header.php" ?>
+<?php
+$title = "BERANDA";
+include "layout/header.php"
+?>
 <div>
     <div class="container d-flex align-items-center justify-content-center" style="height: 90.5vh;">
         <div class="text-center">

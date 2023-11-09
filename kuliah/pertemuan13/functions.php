@@ -78,11 +78,11 @@ function tambahOrder($data)
     $id_order = htmlspecialchars($data["id_order"]);
     $tanggal = htmlspecialchars($data["tanggal_order"]);
     $jam = htmlspecialchars($data["jam_order"]);
-    $namaPelayan = htmlspecialchars($data["pelayan"]);
     $noMeja = htmlspecialchars($data["no_meja"]);
+    $id_pelayan = htmlspecialchars($data["id_pelayan"]);
 
-    $query = "INSERT INTO `order` (id_order, tgl_order, jam_order, pelayan, no_meja, total_bayar)
-              VALUES ('$id_order', '$tanggal', '$jam', '$namaPelayan', '$noMeja', 0)";
+    $query = "INSERT INTO `order` (id_order, tgl_order, jam_order, id_pelayan, no_meja, total_bayar)
+              VALUES ('$id_order', '$tanggal', '$jam', '$id_pelayan', '$noMeja', 0)";
 
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);

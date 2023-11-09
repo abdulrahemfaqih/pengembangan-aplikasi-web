@@ -3,12 +3,12 @@ require "functions.php";
 
 if (isset($_GET["id_order"])) {
     $id_order = $_GET["id_order"];
-    $order = query("SELECT * FROM `order` WHERE id_order = $id_order")[0];
+    $order = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan WHERE id_order = $id_order")[0];
     $order_detail = query("SELECT order_detil.id_order_detil, order_detil.status_order_detil, order_detil.id_order, order_detil.subtotal, order_detil.id_menu, menu.nama,menu.jenis, order_detil.harga, order_detil.jumlah
-        FROM order_detil
-        LEFT JOIN menu ON menu.id_menu = order_detil.id_menu
-        WHERE order_detil.id_order = $id_order
-        ORDER BY order_detil.id_order");
+    FROM order_detil
+    LEFT JOIN menu ON menu.id_menu = order_detil.id_menu
+    WHERE order_detil.id_order = $id_order
+    ORDER BY order_detil.id_order");
     $tanggal = $order["tgl_order"];
     $jam = $order["jam_order"];
     $no = $order["no_meja"];
@@ -51,15 +51,12 @@ if (isset($_POST["id_order_detil"]) && isset($_POST["status"])) {
     $status = $_POST["status"];
     $id_order = $_POST["id_order"];
     updateStatusDetilOrder($id_order_detil, $status);
-
-
     header("Location: detil_order.php?id_order=" . $id_order);
 }
 
+$status = ["baru", "diproses", "selesai"];
 
-
-$status = ["baru", "diproses", "selesai"]
-
+$title = "DETAIL ORDER";
 ?>
 <?php include "layout/header.php" ?>
 <div class="container mt-4">
@@ -89,7 +86,7 @@ $status = ["baru", "diproses", "selesai"]
                             <td><?= $order["id_order"] ?></td>
                             <td><?= $order["tgl_order"] ?></td>
                             <td><?= $order["jam_order"] ?></td>
-                            <td><?= $order["pelayan"] ?></td>
+                            <td><?= $order["nama_pelayan"] ?></td>
                             <td><?= $order["no_meja"] ?></td>
                             <td><?= formatHarga($order["total_bayar"]) ?></td>
                         </tr>

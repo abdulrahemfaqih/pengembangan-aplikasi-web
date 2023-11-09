@@ -4,10 +4,11 @@ require("functions.php");
 
 if (isset($_GET["orderId"])) {
     $id_order = $_GET["orderId"];
-    $data_order_id = query("SELECT * FROM `order` WHERE id_order = $id_order")[0];
+    $data_order_id = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan WHERE id_order = $id_order")[0];
     $tanggal = $data_order_id["tgl_order"];
     $jam = $data_order_id["jam_order"];
     $no_meja = $data_order_id["no_meja"];
+    $pelayan = $data_order_id["nama_pelayan"];
     $total_bayar = $data_order_id["total_bayar"];
 }
 
@@ -45,12 +46,14 @@ if (isset($_POST["selesai"])) {
     header("Location: detil_order.php?id_order=" . $id_order);
 }
 
-
 $listMenu = query("SELECT * FROM menu ");
 ?>
 
 
-<?php include "layout/header.php" ?>
+<?php
+$title = "FORM ORDER";
+include "layout/header.php"
+?>
 <div class="container">
     <div class="card my-4">
         <h5 class="card-header">Form Order Detil</h5>
@@ -63,6 +66,7 @@ $listMenu = query("SELECT * FROM menu ");
                             <th>TANGGAL ORDER</th>
                             <th>JAM ORDER</th>
                             <th>NO MEJA</th>
+                            <th>PELAYAN</th>
                             <th>TOTAL BAYAR</th>
                         </tr>
                     </thead>
@@ -71,6 +75,7 @@ $listMenu = query("SELECT * FROM menu ");
                             <td><?= $id_order ?></td>
                             <td><?= $tanggal ?></td>
                             <td><?= $jam ?></td>
+                            <td><?= $pelayan ?></td>
                             <td><?= $no_meja ?></td>
                             <td><?= formatHarga($total_bayar) ?></td>
                         </tr>

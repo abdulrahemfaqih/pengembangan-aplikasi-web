@@ -31,7 +31,10 @@ if (isset($_POST["Bhapus"])) {
     }
 }
 ?>
-<?php include("layout/header.php") ?>
+<?php
+$title = "DATA MENU";
+include("layout/header.php")
+?>
 
 <div class="container mt-4">
     <div class="card">
@@ -184,7 +187,7 @@ if (isset($_POST["Bhapus"])) {
                         <p style=" font-weight: bold;">Tidak ada menu ditemukan!</p>
                     <?php endif; ?>
                 </table>
-                
+
             </div>
             <!-- Modal tambah -->
             <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
