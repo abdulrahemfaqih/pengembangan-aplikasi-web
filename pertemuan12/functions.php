@@ -11,8 +11,6 @@ if (!$conn) {
     die("Koneksi gagal : " . mysqli_connect_error($conn));
 }
 
-
-
 function query($query): array
 {
     global $conn;
@@ -74,8 +72,6 @@ function hapusMenu($id_menu)
 
 // ====================== FUNCTIONS ORDER ==========================
 
-
-
 function tambahOrder($data)
 {
     global $conn;
@@ -99,7 +95,6 @@ function hapusOrderByOrderId($id_order)
     return mysqli_affected_rows($conn);
 }
 
-
 function tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal)
 {
     global $conn;
@@ -109,13 +104,11 @@ function tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal)
     return mysqli_affected_rows($conn);
 }
 
-
 function getHargaByIdMenu($id_menu)
 {
     $harga = query("SELECT harga FROM menu WHERE id_menu = $id_menu")[0];
     return $harga;
 }
-
 
 function hapusOrderDetil($id_order_detil)
 {
@@ -137,8 +130,6 @@ function updateTotalBayar($id_order)
     mysqli_query($conn, "UPDATE `order` SET total_bayar = (SELECT sum(subtotal) FROM order_detil WHERE id_order = $id_order) WHERE id_order = $id_order");
 
     return mysqli_affected_rows($conn);
-
-
 }
 
 function updateStatusOrder($id_order, $keterangan_status) {
@@ -146,7 +137,7 @@ function updateStatusOrder($id_order, $keterangan_status) {
     mysqli_query($conn, "UPDATE `order` SET status_order = '$keterangan_status' WHERE id_order = $id_order");
 }
 
-
+//========================= OTHER FUNCTIONS ====================
 function formatHarga(float|int|string $harga): int|float|string
 {
     return "Rp. " . number_format($harga, 2, ",", ".");

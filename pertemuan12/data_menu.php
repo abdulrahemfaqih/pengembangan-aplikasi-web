@@ -212,7 +212,7 @@ if (isset($_POST["Bhapus"])) {
                                     <input type="number" required class="form-control" placeholder="inputkan harga menu" name="harga">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Harga Menu</label>
+                                    <label class="form-label">Stok Menu</label>
                                     <input type="number" required class="form-control" placeholder="inputkan stok menu" name="stok">
                                 </div>
                             </div>

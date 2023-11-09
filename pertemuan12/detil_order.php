@@ -14,7 +14,7 @@ if (isset($_GET["id_order"])) {
     $no = $order["no_meja"];
 }
 
-$status_order_detil = query("SELECT id_order_detil, status_order_detil FROM order_detil WHERE id_order = $id_order");
+$status_order_detil = query("SELECT status_order_detil FROM order_detil WHERE id_order = $id_order");
 $jumlah_selesai = 0;
 $jumlah_diproses = 0;
 
