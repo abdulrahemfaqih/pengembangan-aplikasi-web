@@ -182,8 +182,8 @@ include("layout/header.php");
                                 <td><?= formatHarga($order["total_bayar"]) ?></td>
                                 <td><?= $order["status_order"] ?></td>
                                 <td>
-                                    <a href="detil_order.php?id_order=<?= $order["id_order"] ?>"><button class="btn btn-info">Detail Order</button></a>
-                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $order["id_order"] ?>">Hapus</button>
+                                    <a href="detil_order.php?id_order=<?= $order["id_order"] ?>"><button class="btn btn-info btn-sm">Detail Order</button></a>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $order["id_order"] ?>">Hapus</button>
                                 </td>
                             </tr>
                             <!-- Modal Ubah -->

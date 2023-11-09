@@ -202,7 +202,7 @@ if (isset($_POST["Bhapus"])) {
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Jenis Produk</label>
                                     <select required class="form-select" aria-label="Default select example" name="jenis">
-                                        <option selected>Jenis Menu</option>
+                                        <option selected disabled>Jenis Menu</option>
                                         <option value="makanan">Makanan</option>
                                         <option value="minuman">Minuman</option>
                                     </select>
@@ -210,6 +210,10 @@ if (isset($_POST["Bhapus"])) {
                                 <div class="mb-3">
                                     <label class="form-label">Harga Menu</label>
                                     <input type="number" required class="form-control" placeholder="inputkan harga menu" name="harga">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Harga Menu</label>
+                                    <input type="number" required class="form-control" placeholder="inputkan stok menu" name="stok">
                                 </div>
                             </div>
                             <div class="modal-footer">

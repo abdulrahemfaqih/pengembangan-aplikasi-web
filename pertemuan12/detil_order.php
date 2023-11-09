@@ -69,8 +69,8 @@ $status = ["baru", "diproses", "selesai"]
         </h5>
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <a href="data_order.php" class="btn btn-secondary mb-3">Kembali Ke Data Order</a>
-                <a href="form_order_detil.php?orderId=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary mb-3">Tambah Order Detil</a>
+                <a href="data_order.php" class="btn btn-secondary btn-sm mb-3">Kembali Ke Data Order</a>
+                <a href="form_order_detil.php?orderId=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary btn-sm mb-3">Tambah Order Detil</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">

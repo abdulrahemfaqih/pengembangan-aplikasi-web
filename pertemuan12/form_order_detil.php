@@ -102,7 +102,7 @@ $listMenu = query("SELECT * FROM menu ");
                                     <input class="form-control" type="number" name="jumlah" value="1" min="1">
                                 </td>
                                 <td colspan="2">
-                                    <button class="btn btn-primary" type="submit" name="tambahMenu">Tambah</button>
+                                    <button class="btn btn-primary btn-sm" type="submit" name="tambahMenu">Tambah</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -139,7 +139,7 @@ $listMenu = query("SELECT * FROM menu ");
                                         <td><?= formatHarga($detil["harga"]) ?></td>
                                         <td><?= formatHarga($detil["subtotal"]) ?></td>
                                         <td>
-                                            <a class="btn btn-danger" href="form_order_detil.php?orderId=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
+                                            <a class="btn btn-danger btn-sm" href="form_order_detil.php?orderId=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
                                         </td>
                                     </tr>
                                 </tbody>

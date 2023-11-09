@@ -32,9 +32,10 @@ function tambahMenu(array $data): int
     $nama = htmlspecialchars($data["nama"]);
     $jenis = htmlspecialchars($data["jenis"]);
     $harga = htmlspecialchars($data["harga"]);
+    $stok = htmlspecialchars($data["stok"]);
 
-    $query = "INSERT INTO menu (nama, jenis, harga)
-                VALUES ('$nama', '$jenis', '$harga')";
+    $query = "INSERT INTO menu (nama, jenis, harga, stok)
+                VALUES ('$nama', '$jenis', '$harga', '$stok')";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
