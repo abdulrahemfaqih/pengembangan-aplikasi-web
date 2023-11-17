@@ -170,7 +170,7 @@ include "layout/header.php"
                     </table>
                 </div>
                 <button class="btn btn-warning" type="submit" name="selesai">Selesai</button>
-                <?php if (!isset($_GET["tambahlagi"])) : ?>
+                <?php if (!isset($_GET["tambahlagi"]) && !isset($_GET["qr"])) : ?>
                     <button class="btn btn-danger" type="submit" name="batal">Batal</button>
                 <?php endif; ?>
             </form>

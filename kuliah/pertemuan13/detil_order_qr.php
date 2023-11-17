@@ -105,7 +105,6 @@ $title = "DETAIL ORDER";
                                 <th>HARGA</th>
                                 <th>JUMLAH</th>
                                 <th>SUB TOTAL</th>
-                                <th>STATUS</th>
                                 <th>AKSI</th>
                             </tr>
                         </thead>
@@ -122,21 +121,6 @@ $title = "DETAIL ORDER";
                                     <td><?= formatHarga($order["harga"]) ?></td>
                                     <td><?= $order["jumlah"] ?></td>
                                     <td><?= formatHarga($order["subtotal"]) ?></td>
-                                    <td>
-                                        <form action="" method="post">
-                                            <input type="hidden" value="<?= $id_order ?>" name="id_order">
-                                            <?php if ($order["status_order_detil"] == "baru" || $order["status_order_detil"] == "diproses") : ?>
-                                                <select class="form-select" name="status" onchange="this.form.submit()">
-                                                    <?php foreach ($status as $s) : ?>
-                                                        <option value="<?= $s ?>" <?= ($order["status_order_detil"] == $s) ? "selected" : "" ?>><?= $s ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            <?php else : ?>
-                                                <span class="btn btn-success btn-sm">Selesai</span>
-                                            <?php endif; ?>
-                                            <input type="hidden" name="id_order_detil" value="<?= $order["id_order_detil"] ?>">
-                                        </form>
-                                    </td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="detil_order.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>" onclick="return confirm('Apakah anda yakin ingin id order ini?')">
                                             hapus
