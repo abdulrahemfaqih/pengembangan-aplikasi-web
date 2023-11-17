@@ -124,7 +124,7 @@ mysqli_close($conn);
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -152,7 +152,7 @@ mysqli_close($conn);
                         <div class="mb-3">
                             <label for="tanggal" class="form-label">Tanggal Transaksi</label>
                             <?php date_default_timezone_set('Asia/Jakarta') ?>
-                            <input type="text" readonly name="tanggal_transaksi" class="form-control" id="tanggal" value="<?= date("Y-m-d") ?>">
+                            <input type="text" name="tanggal_transaksi" class="form-control" id="tanggal" value="<?= date("Y-m-d") ?>">
                         </div>
                     </div>
                     <div class="modal-footer">

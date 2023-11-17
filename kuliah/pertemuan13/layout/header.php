@@ -17,6 +17,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <?php if (!isset($_GET["qr"])) : ?>
             <div class="collapse navbar-collapse justify-content-end" id="navbar">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -27,5 +28,6 @@
                     </li>
                 </ul>
             </div>
+            <?php endif; ?>
         </div>
     </nav>

@@ -60,13 +60,13 @@ $title = "DETAIL ORDER";
 ?>
 <?php include "layout/header.php" ?>
 <div class="container mt-4">
+    <marquee><h1 class="text-danger my-4">TERIMAKSIH TELAH BERKUNJUNG DI WAROENG FAQIH</h1></marquee>
     <div class="card">
         <h5 class="card-header">
             Detail Order
         </h5>
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <a href="data_order.php" class="btn btn-secondary btn-sm mb-3">Kembali Ke Data Order</a>
                 <a href="form_order_detil.php?id_order=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary btn-sm mb-3">Tambah Order Detil</a>
             </div>
             <div class="table-responsive">

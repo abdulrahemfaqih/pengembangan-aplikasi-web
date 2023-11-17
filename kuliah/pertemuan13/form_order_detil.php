@@ -1,9 +1,8 @@
 <?php
 require("functions.php");
 
-
-if (isset($_GET["orderId"])) {
-    $id_order = $_GET["orderId"];
+if (isset($_GET["id_order"])) {
+    $id_order = $_GET["id_order"];
     $data_order_id = query("SELECT `order`.*, pelayan.nama_pelayan FROM `order` JOIN `pelayan` ON order.id_pelayan = pelayan.id_pelayan WHERE id_order = $id_order")[0];
     $tanggal = $data_order_id["tgl_order"];
     $jam = $data_order_id["jam_order"];
@@ -14,26 +13,36 @@ if (isset($_GET["orderId"])) {
 
 if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu"])) {
     $id_menu = $_POST["menu"];
+    $stok_menu = query("SELECT stok FROM `menu` WHERE id_menu = $id_menu")[0];
+    $stok_menu = $stok_menu["stok"];
     $jumlah = $_POST["jumlah"];
-    $ambilHarga = query("SELECT harga FROM menu WHERE id_menu = $id_menu")[0];
-    if (count($ambilHarga) > 0) {
-        $harga = $ambilHarga["harga"];
-        $subtotal = $jumlah * $harga;
-        if (tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal) <= 0) {
-            echo "menu gagal ditambahkan";
+    if ($jumlah < $stok_menu) {
+        $ambilHarga = query("SELECT harga FROM menu WHERE id_menu = $id_menu")[0];
+        if (count($ambilHarga) > 0) {
+            $harga = $ambilHarga["harga"];
+            $subtotal = $jumlah * $harga;
+            if (tambahOrderDetail($id_order, $id_menu, $harga, $jumlah, $subtotal) <= 0) {
+                echo "menu gagal ditambahkan";
+            }
         }
+        $stok_menu = $stok_menu - $jumlah;
+        updateStok($id_menu, $stok_menu);
+        updateTotalBayar($id_order);
+        $total_bayar = query("SELECT total_bayar FROM `order` WHERE id_order = $id_order")[0];
+        $total_bayar = $total_bayar["total_bayar"];
+
+    } else {
+        echo "<script>alert('jumlah melebihi stok')</script>";
     }
-    updateTotalBayar($id_order);
-    $total_bayar = query("SELECT total_bayar FROM `order` WHERE id_order = $id_order")[0];
-    $total_bayar = $total_bayar["total_bayar"];
 }
+
+
 
 if (isset($_GET["id_order_detil"])) {
     $id_order_detil = $_GET["id_order_detil"];
     hapusOrderDetil($id_order_detil);
     updateTotalBayar($id_order);
-
-    header("Location: form_order_detil.php?orderId=" . $id_order);
+    header("Location: form_order_detil.php?id_order=" . $id_order);
 }
 
 
@@ -43,6 +52,10 @@ if (isset($_POST["batal"])) {
 }
 
 if (isset($_POST["selesai"])) {
+    if(isset($_GET["qr"])) {
+        header("Location: detil_order_qr.php?id_order=". $id_order . "&qr=true");
+        exit;
+    }
     header("Location: detil_order.php?id_order=" . $id_order);
 }
 
@@ -75,8 +88,8 @@ include "layout/header.php"
                             <td><?= $id_order ?></td>
                             <td><?= $tanggal ?></td>
                             <td><?= $jam ?></td>
-                            <td><?= $pelayan ?></td>
                             <td><?= $no_meja ?></td>
+                            <td><?= $pelayan ?></td>
                             <td><?= formatHarga($total_bayar) ?></td>
                         </tr>
                     </tbody>
