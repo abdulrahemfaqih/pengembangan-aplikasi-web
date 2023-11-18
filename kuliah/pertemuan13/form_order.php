@@ -32,8 +32,6 @@ if (isset($_POST["lanjut_pesan"])) {
             window.location.href = 'form_order.php?no_meja=$no_meja&&qr=true'
             </script>";
             exit;
-
-
         }
     }
 
@@ -47,7 +45,6 @@ if (isset($_POST["lanjut_pesan"])) {
     } else {
         echo "<script>alert('Order gagal ditambah')</script>";
     }
-
 }
 
 
@@ -89,7 +86,7 @@ include "layout/header.php"
                 </div>
                 <div class="d-flex justify-content-between">
                     <?php if (!isset($_GET["qr"])) : ?>
-                    <a href="data_order.php" class="btn btn-secondary">Kembali</a>
+                        <a href="data_order.php" class="btn btn-secondary">Kembali</a>
                     <?php endif; ?>
                     <button type="submit" name="lanjut_pesan" class="btn btn-primary">Lanjut Pemesanan</button>
                 </div>
