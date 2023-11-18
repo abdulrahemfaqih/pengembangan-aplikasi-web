@@ -11,6 +11,7 @@ $currentMenu = isset($_GET['menu']) ? $_GET['menu'] : '';
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>Penjualan | <?= $title ?></title>
 </head>
 

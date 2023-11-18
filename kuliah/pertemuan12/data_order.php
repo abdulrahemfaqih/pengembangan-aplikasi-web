@@ -35,7 +35,7 @@ if (isset($_POST["Bhapus"])) {
     }
 }
 
-$pelayan = ["Wafda", "Faqih", "Farish"];
+    $pelayan = ["Wafda", "Faqih", "Farish"];
 
 
 // Include header

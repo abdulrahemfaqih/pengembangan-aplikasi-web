@@ -7,6 +7,7 @@ if (isset($_GET["no_meja"])) {
     $no_meja = null;
 }
 
+
 // menghapus order jika order tidak digunakan di order detil
 deleteOrderWhereNotInDetil();
 

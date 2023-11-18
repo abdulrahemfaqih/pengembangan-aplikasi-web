@@ -7,69 +7,64 @@ if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
+
+$jumlah_transaksi = CountTransaksi()["jumlah_transaksi"];
+$jumlah_supplier = countSupplier()["jumlah_supplier"];
+$jumlah_barang = countBarang()["jumlah_barang"];
+$jumlah_pendapatan = getAllIncome()["jumlah_pendapatan"];
+
+
 $title = "Beranda";
 include "layout/header.php"
 ?>
 <div class="container my-4">
     <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-blue">
                 <div class="inner">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+                    <h3><?= $jumlah_transaksi ?></h3>
+                    <p>Transaksi</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="fa-solid fa-cash-register"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Bounce Rate</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>44</h3>
 
-                    <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
 
-                    <p>Unique Visitors</p>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-green">
+                <div class="inner">
+                    <h3><?= $jumlah_supplier ?></h3>
+                    <p>Supplier</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="fa-solid fa-truck-droplet"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-orange">
+                <div class="inner">
+                    <h3><?= $jumlah_barang ?></h3>
+                    <p>Barang</p>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h3><?= formatHarga($jumlah_pendapatan); ?></h3>
+                    <p>Jumlah Pendapatan</p>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <?php

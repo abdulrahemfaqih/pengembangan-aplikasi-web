@@ -2,16 +2,6 @@
 define("DB", mysqli_connect("localhost", "root", "", "penjualan"));
 
 
-// function query($query)
-// {
-//     $result = mysqli_query(DB, $query);
-//     $rows = [];
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $rows[] = $row;
-//     }
-//     return $rows;
-// }
-
 // ================================ TABEL BARANG ===========================
 
 function tambahDataBarang($data)
@@ -56,6 +46,17 @@ function hapusbarang($id)
     return mysqli_affected_rows(DB);
 }
 
+function countBarang()
+{
+    return mysqli_query(DB, "SELECT COUNT(id) AS jumlah_barang FROM barang")->fetch_assoc();
+}
+function getBarangNotInTransDetailByIdTrans($transaksi_id) {
+    return mysqli_query(DB, "SELECT * FROM barang WHERE id NOT IN (SELECT barang_id FROM transaksi_detail WHERE transaksi_id = $transaksi_id)")->fetch_all(MYSQLI_ASSOC);
+}
+
+function getHargaByIdBarang($id_barang) {
+    return mysqli_query(DB, "SELECT harga FROM barang WHERE id = $id_barang")->fetch_assoc()[0];
+}
 
 
 // ================================ TABEL SUPPLIER =========================
@@ -95,11 +96,16 @@ function ubahSupplier($data)
     return mysqli_query(DB, $query);
 };
 
+function countSupplier()
+{
+    return mysqli_query(DB, "SELECT count(id) AS jumlah_supplier FROM supplier")->fetch_assoc();
+}
+
 // =============================== TABEL PELANGGAN ========================
 
 function getAllPelanggan()
 {
-    return mysqli_query(DB, "SELECT * FROM pelanggan");
+    return mysqli_query(DB, "SELECT * FROM pelanggan")->fetch_all(MYSQLI_ASSOC);
 }
 
 
@@ -108,7 +114,8 @@ function getAllPelanggan()
 
 function getAllTransaksi()
 {
-    return mysqli_query(DB, "SELECT * FROM transaksi");
+    return mysqli_query(DB, "SELECT pelanggan.nama, transaksi.* FROM transaksi
+    JOIN pelanggan ON transaksi.pelanggan_id = pelanggan.id;")->fetch_all(MYSQLI_ASSOC);
 }
 
 function getTransaksiJoinBarang($transaksi_id)
@@ -126,9 +133,8 @@ function tambahTransaksi($data)
     $keterangan = htmlspecialchars($data["keterangan"]);
     $pelanggan_id = htmlspecialchars($data["pelanggan_id"]);
 
-
     return mysqli_query(DB, "INSERT INTO transaksi (waktu_transaksi, keterangan, pelanggan_id, total)
-                            VALUES ('$waktu_transaksi', '$keterangan', '$pelanggan_id', 0 ");
+                            VALUES ('$waktu_transaksi', '$keterangan', '$pelanggan_id', 0) ");
 }
 
 function hapusTransaksibyID($id)
@@ -137,9 +143,9 @@ function hapusTransaksibyID($id)
     return mysqli_affected_rows(DB);
 }
 
-function getTotalTrans($transaksi_id) {
+function getTotalTrans($transaksi_id)
+{
     mysqli_query(DB, "SELECT total FROM transaksi WHERE transaksi_id = $transaksi_id")->fetch_assoc()[0];
-
 }
 
 
@@ -163,6 +169,36 @@ function getRangeDate($start, $end)
 {
     return mysqli_query(DB, "SELECT count(pelanggan_id) as pelanggan, waktu_transaksi, sum(total) as total
     FROM transaksi WHERE waktu_transaksi BETWEEN '$start' AND '$end' GROUP BY waktu_transaksi")->fetch_all(MYSQLI_ASSOC);
+}
+
+function getAllIncome()
+{
+    return mysqli_query(DB, "SELECT SUM(total) as jumlah_pendapatan FROM transaksi")->fetch_assoc();
+}
+
+function CountTransaksi()
+{
+    return mysqli_query(DB, "SELECT COUNT(id) as jumlah_transaksi FROM transaksi")->fetch_assoc();
+}
+
+function deleteTransWhereNotInDetil()
+{
+    return mysqli_query(DB, "DELETE FROM transaksi WHERE id NOT IN (SELECT id FROM transaksi_detail)");
+}
+
+function getTransaksiById($id_transaksi)
+{
+    return mysqli_query(DB, "SELECT transaksi.* , pelanggan.nama FROM transaksi
+    JOIN pelanggan ON transaksi.pelanggan_id = pelanggan.id
+    WHERE transaksi.id = $id_transaksi")->fetch_assoc();
+}
+
+function getTransaksiDetailByIdTrans($transaksi_id) {
+    return mysqli_query(DB, "SELECT transaksi_detail.transaksi_id, transaksi_detail.barang_id, barang.kode_barang, barang.nama_barang, barang.harga, transaksi_detail.qty
+                FROM transaksi_detail
+                LEFT JOIN barang ON barang.id = transaksi_detail.barang_id
+                WHERE transaksi_detail.transaksi_id = $transaksi_id
+                ORDER BY transaksi_detail.transaksi_id")->fetch_all(MYSQLI_ASSOC);
 }
 
 
