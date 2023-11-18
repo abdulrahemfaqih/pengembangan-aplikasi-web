@@ -30,7 +30,6 @@ if (isset($_POST["menu"]) && isset($_POST["jumlah"]) && isset($_POST["tambahMenu
         updateTotalBayar($id_order);
         $total_bayar = query("SELECT total_bayar FROM `order` WHERE id_order = $id_order")[0];
         $total_bayar = $total_bayar["total_bayar"];
-
     } else {
         echo "<script>alert('jumlah melebihi stok')</script>";
     }
@@ -42,12 +41,14 @@ if (isset($_GET["id_order_detil"])) {
     $id_order_detil = $_GET["id_order_detil"];
     hapusOrderDetil($id_order_detil);
     updateTotalBayar($id_order);
-    if(isset($_GET["qr"])) {
-
+    if (isset($_GET["qr"]) && isset($_GET["tambahlagi"])) {
+        header("Location: form_order_detil.php?id_order=" . $id_order . "&qr=true&tambahlagi=''");
+    } else if (isset($_GET["tambahlagi"])) {
+        header("Location: form_order_detil.php?id_order=" . $id_order . "&tambahlagi=''");
+    } else if (isset($_GET["qr"])) {
         header("Location: form_order_detil.php?id_order=" . $id_order . "&qr=true");
     } else {
-        header("Location: form_order_detil.php?id_order=" . $id_order );
-
+        header("Location: form_order_detil.php?id_order=" . $id_order);
     }
 }
 
@@ -58,8 +59,8 @@ if (isset($_POST["batal"])) {
 }
 
 if (isset($_POST["selesai"])) {
-    if(isset($_GET["qr"])) {
-        header("Location: detil_order_qr.php?id_order=". $id_order . "&qr=true");
+    if (isset($_GET["qr"])) {
+        header("Location: detil_order_qr.php?id_order=" . $id_order . "&qr=true");
         exit;
     }
     header("Location: detil_order.php?id_order=" . $id_order);
@@ -163,8 +164,12 @@ include "layout/header.php"
                                         <td><?= formatHarga($detil["harga"]) ?></td>
                                         <td><?= formatHarga($detil["subtotal"]) ?></td>
                                         <td>
-                                            <?php if (isset($_GET["qr"])) : ?>
-                                            <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>&qr=true">Hapus</a>
+                                            <?php if (isset($_GET["qr"]) && isset($_GET["tambahlagi"])) : ?>
+                                                <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>&qr=true&tambahlagi=''">Hapus</a>
+                                            <?php elseif (isset($_GET["qr"])) : ?>
+                                                <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>&qr=true">Hapus</a>
+                                            <?php elseif (isset($_GET["tambahlagi"])) : ?>
+                                                <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>&tambahlagi=''">Hapus</a>
                                             <?php else : ?>
                                                 <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
                                             <?php endif; ?>

@@ -14,10 +14,12 @@ if (isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $user = getUsername($username);
+    $user = getDataUser($username);
     if (!empty($user)) {
         if (md5($password) == $user["password"]) {
             $_SESSION["login"] = true;
+            $_SESSION["level"] = $user["level"];
+            $_SESSION["username"] = $user["username"];
             echo "<script>
             alert('login sukses')
             window.location.href = 'index.php';
@@ -39,7 +41,7 @@ if (isset($_POST["login"])) {
 
 <head>
     <title>Form Login</title>
-    <link rel="stylesheet" href="assets/login.css\`">
+    <link rel="stylesheet" href="assets/login.css">
 </head>
 
 <body>
