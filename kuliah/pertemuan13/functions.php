@@ -134,7 +134,7 @@ function getAllPelayan() {
 }
 
 function getInfoMejaSebelumnya($no_meja) {
-    return mysqli_query(DB, "SELECT no_meja, jam_order FROM `order` WHERE no_meja = '$no_meja' ORDER BY id_order DESC LIMIT 1")->fetch_assoc();
+    return mysqli_query(DB, "SELECT no_meja, jam_order, tgl_order FROM `order` WHERE no_meja = '$no_meja' ORDER BY id_order DESC LIMIT 1")->fetch_assoc();
 }
 
 function deleteOrderWhereNotInDetil() {

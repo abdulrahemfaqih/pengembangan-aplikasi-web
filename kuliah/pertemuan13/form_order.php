@@ -25,8 +25,9 @@ if (isset($_POST["lanjut_pesan"])) {
     if (!empty($info_meja_sebelumnya)) {
         $meja = $info_meja_sebelumnya["no_meja"];
         $jam = $info_meja_sebelumnya["jam_order"];
+        $tanggal = $info_meja_sebelumnya["tgl_order"];
         $jam_tersedia = date("H:i:s", strtotime("+15 minutes", strtotime($jam)));
-        if ($jam_sekarang < $jam_tersedia) {
+        if ($jam_sekarang < $jam_tersedia && $tanggal_sekarang <= $tanggal) {
             echo "<script>alert('Sorry banget nih, no meja $no_meja masih digunakan, tunggu sampai $jam_tersedia');
             window.location.href = 'form_order.php?no_meja=$no_meja&&qr=true'
             </script>";
