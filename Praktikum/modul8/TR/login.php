@@ -1,6 +1,7 @@
 <?php
+
 session_start();
-include "database.php";
+include "function_database.php";
 
 
 if (isset($_SESSION["login"])) {
@@ -38,7 +39,7 @@ if (isset($_POST["login"])) {
 
 <head>
     <title>Form Login</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="assets/login.css\`">
 </head>
 
 <body>

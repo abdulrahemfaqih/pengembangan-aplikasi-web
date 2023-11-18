@@ -42,7 +42,13 @@ if (isset($_GET["id_order_detil"])) {
     $id_order_detil = $_GET["id_order_detil"];
     hapusOrderDetil($id_order_detil);
     updateTotalBayar($id_order);
-    header("Location: form_order_detil.php?id_order=" . $id_order);
+    if(isset($_GET["qr"])) {
+
+        header("Location: form_order_detil.php?id_order=" . $id_order . "&qr=true");
+    } else {
+        header("Location: form_order_detil.php?id_order=" . $id_order );
+
+    }
 }
 
 
@@ -157,7 +163,11 @@ include "layout/header.php"
                                         <td><?= formatHarga($detil["harga"]) ?></td>
                                         <td><?= formatHarga($detil["subtotal"]) ?></td>
                                         <td>
-                                            <a class="btn btn-danger btn-sm" href="form_order_detil.php?orderId=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
+                                            <?php if (isset($_GET["qr"])) : ?>
+                                            <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>&qr=true">Hapus</a>
+                                            <?php else : ?>
+                                                <a class="btn btn-danger btn-sm" href="form_order_detil.php?id_order=<?= $id_order ?>&id_order_detil=<?= $detil["id_order_detil"] ?>">Hapus</a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 </tbody>

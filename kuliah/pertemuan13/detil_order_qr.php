@@ -41,7 +41,7 @@ if (isset($_GET["hapus_order_detil"])) {
     $id_order_detil = $_GET["hapus_order_detil"];
     hapusOrderDetil($id_order_detil);
     updateTotalBayar($id_order);
-    header("Location: detil_order.php?id_order=" . $id_order);
+    header("Location: detil_order_qr.php?id_order=" . $id_order . "&qr=true");
 }
 
 
@@ -51,7 +51,7 @@ if (isset($_POST["id_order_detil"]) && isset($_POST["status"])) {
     $status = $_POST["status"];
     $id_order = $_POST["id_order"];
     updateStatusDetilOrder($id_order_detil, $status);
-    header("Location: detil_order.php?id_order=" . $id_order);
+    header("Location: detil_order_qr.php?id_order=" . $id_order . "&qr=true");
 }
 
 $status = ["baru", "diproses", "selesai"];
@@ -60,14 +60,16 @@ $title = "DETAIL ORDER";
 ?>
 <?php include "layout/header.php" ?>
 <div class="container mt-4">
-    <marquee><h1 class="text-danger my-4">TERIMAKSIH TELAH BERKUNJUNG DI WAROENG FAQIH</h1></marquee>
+    <marquee>
+        <h1 class="text-danger my-4">TERIMAKSIH TELAH BERKUNJUNG DI WAROENG FAQIH</h1>
+    </marquee>
     <div class="card">
         <h5 class="card-header">
             Detail Order
         </h5>
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <a href="form_order_detil.php?id_order=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary btn-sm mb-3">Tambah Order Detil</a>
+                <a href="form_order_detil.php?id_order=<?= $id_order ?>&tambahlagi=''&qr=true" class="btn btn-primary btn-sm mb-3">Tambah Order Detil</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -122,7 +124,7 @@ $title = "DETAIL ORDER";
                                     <td><?= $order["jumlah"] ?></td>
                                     <td><?= formatHarga($order["subtotal"]) ?></td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="detil_order.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>" onclick="return confirm('Apakah anda yakin ingin id order ini?')">
+                                        <a class="btn btn-danger btn-sm" href="detil_order_qr.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>&qr=true" onclick="return confirm('Apakah anda yakin ingin id order ini?')">
                                             hapus
                                         </a>
                                     </td>
