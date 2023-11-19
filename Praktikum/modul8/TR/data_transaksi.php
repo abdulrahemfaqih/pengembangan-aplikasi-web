@@ -15,9 +15,15 @@ deleteTransWhereNotInDetil();
 if (isset($_GET["transaksi_id"])) {
     $transaksi_id = $_GET["transaksi_id"];
     if (hapusTransaksibyID($transaksi_id) > 0) {
-        echo "<meta http-equiv=refresh content=1;URL='index.php'>";
+        echo "<script>
+            alert('transaksi id $transaksi_id berhasil dihapus');
+            window.location.href = 'data_transaksi.php';
+            </script>";
     } else {
-        echo "<meta http-equiv=refresh content=1;URL='index.php'>";
+        echo "<script>
+            alert('transaksi id $transaksi_id gagal dihapus');
+            window.location.href = 'data_transaksi.php';
+            </script>";
     }
 }
 if (isset($_POST["submit"])) {
@@ -26,11 +32,14 @@ if (isset($_POST["submit"])) {
     $waktu_transaksi = $_POST["waktu_transaksi"];
     if (!empty($pelanggan) && !empty($keterangan) && !empty($waktu_transaksi)) {
         if (!tambahTransaksi($_POST)) {
-            echo "query gagal : " . mysqli_error(DB);
+            echo "<script>
+            alert('transaksi gagal ditambahkan');
+            window.location.href = 'data_transaksi.php';
+            </script>";
         } else {
             $id_transaksi = mysqli_insert_id(DB);
         }
-        header("Location: form_transaksi_detail.php?id_transaksi    =$id_transaksi");
+        header("Location: form_transaksi_detail.php?id_transaksi=$id_transaksi");
     } else {
         echo "<script>alert('semua inputan harus diisi')</script>";
     }
@@ -47,7 +56,7 @@ include "layout/header.php"
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
                     Tambah Transaksi
                 </button>
             </div>
@@ -90,10 +99,10 @@ include "layout/header.php"
                                     </td>
                                     <td style="width: 150px;">
                                         <div class="d-flex justify-content-around">
-                                            <a href="detailTransaksi.php?transaksi_id=<?= $transaksi["id"] ?>">
+                                            <a href="detail_transaksi.php?id_transaksi=<?= $transaksi["id"] ?>">
                                                 <button type="button" class="btn btn-info btn-sm">Detail</button>
                                             </a>
-                                            <a href="index.php?transaksi_id=<?= $transaksi["id"] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus supplier ini?')">
+                                            <a href="data_transaksi.php?transaksi_id=<?= $transaksi["id"] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus supplier ini?')">
                                                 <button type="button" class="btn btn-danger btn-sm">Hapus</button>
                                             </a>
                                         </div>

@@ -6,29 +6,55 @@ if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
-$data_all_user = getAllUser();
+
+$username = isset($_POST["username"]) ? $_POST["username"] : '';
 
 if (isset($_POST["b_tambah"])) {
     if (tambah_user($_POST) > 0) {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username berhasil ditambahkan');
+            window.location.href = 'data_user.php';
+            </script>";
     } else {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username gagal ditambahkan ditambahkan');
+            window.location.href = 'data_user.php';
+            </script>";
     }
 }
 if (isset($_POST["b_ubah"])) {
     if (ubah_user($_POST) > 0) {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username berhasil diubah');
+            window.location.href = 'data_user.php';
+            </script>";
     } else {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username gagal diubah');
+            window.location.href = 'data_user.php';
+            </script>";
     }
 }
 if (isset($_POST["b_hapus"])) {
     if (hapus_user($_POST["id_user"]) > 0) {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username berhasil di hapus');
+            window.location.href = 'data_user.php';
+            </script>";
     } else {
-        header("location: data_user.php");
+        echo "<script>
+            alert('user dengan username $username gagal di hapus');
+            window.location.href = 'data_user.php';
+            </script>";
     }
 }
+$ket_level = [
+    1 => "Admin",
+    2 => "User Biasa"
+];
+
+$data_all_user = getAllUser();
+
 $title = "Data user";
 include "layout/header.php"
 ?>
@@ -85,7 +111,7 @@ include "layout/header.php"
                     </div>
                 </div>
                 <!-- end modal tambah -->
-                <a class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modal_tambah">Tambah User</a>
+                <a class="btn btn-primary mb-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modal_tambah">Tambah User</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">

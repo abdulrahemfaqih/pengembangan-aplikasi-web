@@ -19,9 +19,11 @@ if (isset($_POST["login"])) {
         if (md5($password) == $user["password"]) {
             $_SESSION["login"] = true;
             $_SESSION["level"] = $user["level"];
+            $_SESSION["nama"] = $user["nama"];
             $_SESSION["username"] = $user["username"];
+            $nama = $_SESSION["nama"];
             echo "<script>
-            alert('login sukses')
+            alert('login sukses, Selamat Datang $nama ')
             window.location.href = 'index.php';
             </script>";
             exit;
@@ -42,14 +44,11 @@ if (isset($_POST["login"])) {
 <head>
     <title>Form Login</title>
     <link rel="stylesheet" href="assets/login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <div class="error-message">
-        <?php if (isset($error)) : ?>
-            <p><?= $error ?></p>
-        <?php endif; ?>
-    </div>
+
     <div class="container">
         <div class="login-form">
             <h2>Login</h2>
@@ -59,6 +58,11 @@ if (isset($_POST["login"])) {
                 <button type="submit" id="login-button" name="login">Login</button>
             </form>
         </div>
+    </div>
+    <div class="error-message">
+        <?php if (isset($error)) : ?>
+            <p><?= $error ?></p>
+        <?php endif; ?>
     </div>
 </body>
 

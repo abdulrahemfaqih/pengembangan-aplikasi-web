@@ -28,7 +28,7 @@ include "layout/header.php"
     <?php if (isset($_POST["tampil"])) : ?>
         <?php if (!empty($data_penjualan)) : ?>
             <div class="visible mt-5">
-                <a href="index.php" class="btn btn-warning">Kembali</a>
+                <a href="laporan.php" class="btn btn-warning">Kembali</a>
                 <button class="btn btn-primary" onclick="printPage()">Print</button>
                 <a href="laporan_excel.php?start=<?= $start ?>&end=<?= $end ?>" class="btn btn-success">Excel</a>
             </div>
@@ -100,9 +100,10 @@ include "layout/header.php"
                 }
             </script>
         <?php else : ?>
-            <div class="alert alert-warning my-5" role="alert">
+            <div class="alert alert-warning mt-5 mb-2" role="alert">
                 <?= $message ?>
             </div>
+            <a href="laporan.php" class="btn btn-warning btn-sm">Kembali</a>
         <?php endif; ?>
     <?php else :  ?>
         <div class="d-flex justify-content-center">
@@ -110,7 +111,7 @@ include "layout/header.php"
                 <h5 class="card-header bg-secondary-emphasis">Filter Rekap Penjualan Berdasarkan Tanggal</h5>
                 <div class="card-body">
                     <form action="" method="post">
-                        <div class="row">
+                        <div class="row d-flex align-items-center">
                             <div class="col-4">
                                 <input name="start" type="date" class="form-control">
                             </div>
@@ -118,7 +119,7 @@ include "layout/header.php"
                                 <input name="end" type="date" class="form-control">
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-success" type="submit" name="tampil">Tampilkan</button>
+                                <button class="btn btn-dark btn-sm" type="submit" name="tampil">Tampilkan</button>
                             </div>
                         </div>
                     </form>

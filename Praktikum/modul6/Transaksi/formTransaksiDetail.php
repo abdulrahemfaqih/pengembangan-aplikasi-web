@@ -44,7 +44,6 @@ $barangBelumDitambahkan = query($queryBarangBelumDitambahkan);
 if (isset($_GET["barang_id"])) {
     hapusTransDetailByBarangId($transaksi_id,$_GET["barang_id"]);
     header("Location: formTransaksiDetail.php?last_id=$transaksi_id&pelanggan=$pelanggan&keterangan=$keterangan&waktu_transaksi=$waktu_transaksi");
-
 }
 ?>
 

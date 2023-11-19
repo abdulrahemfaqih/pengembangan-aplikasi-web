@@ -1,69 +1,82 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 * {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  font-family: "Poppins", sans-serif;
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   text-decoration: none;
+   font-family: "Poppins", sans-serif;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  flex-direction: column;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+   font-family: Arial, sans-serif;
+   flex-direction: column;
+   background-color: #f4f4f4; /* Added background color for better visibility */
+}
+
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
 }
 
 .login-form {
-  max-width: 400px;
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+   max-width: 400px;
+   width: 100%;
+   padding: 30px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   background-color: #fff;
 }
 
 .login-form h2 {
-  text-align: center;
-  margin-bottom: 20px;
+   text-align: center;
+   margin-bottom: 20px;
 }
 
 .login-form input[type="text"],
 .login-form input[type="password"] {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
+   width: 100%;
+   padding: 15px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+   font-size: 16px;
 }
 
 .login-form button {
-  padding: 10px 20px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
-  background-color: #4CAF50;
-  color: #fff;
-  width: 100%;
+   padding: 10px 20px;
+   margin-top: 15px;
+   border: none;
+   border-radius: 4px;
+   box-sizing: border-box;
+   font-size: 16px;
+   background-color: #4caf50;
+   color: #fff;
+   width: 100%;
 }
 
 .login-form button:hover {
-  background-color: #45a049;
+   background-color: #45a049;
 }
 
-.error-message p  {
-  color: #ff0019;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+.error-message p {
+   color: #ff0019;
+   padding: 10px;
+   border-radius: 5px;
+   margin-bottom: 10px;
 }
 
-
-
+@media (max-width: 600px) {
+   /* Adjust styles for smaller screens */
+   .login-form {
+      padding: 15px;
+      margin: 1rem;
+   }
+}
