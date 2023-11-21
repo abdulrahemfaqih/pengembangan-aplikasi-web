@@ -18,8 +18,8 @@ $currentMenu = isset($_GET['menu']) ? $_GET['menu'] : '';
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container py-2">
-            <a class="navbar-brand fw-bold text-secondary" href="index.php">Dashboard Penjualan</a>
+        <div class="pembungkus container py-2">
+            <a class="navbar-brand fw-bold text-secondary visible" href="index.php">Dashboard Penjualan</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

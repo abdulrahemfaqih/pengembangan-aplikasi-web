@@ -1,8 +1,6 @@
 <?php
-
 session_start();
 include "function_database.php";
-
 
 if (isset($_SESSION["login"])) {
     header("Location: index.php");
@@ -48,7 +46,11 @@ if (isset($_POST["login"])) {
 </head>
 
 <body>
-
+    <div class="error-message">
+        <?php if (isset($error)) : ?>
+            <p><?= $error ?></p>
+        <?php endif; ?>
+    </div>
     <div class="container">
         <div class="login-form">
             <h2>Login</h2>
@@ -58,11 +60,6 @@ if (isset($_POST["login"])) {
                 <button type="submit" id="login-button" name="login">Login</button>
             </form>
         </div>
-    </div>
-    <div class="error-message">
-        <?php if (isset($error)) : ?>
-            <p><?= $error ?></p>
-        <?php endif; ?>
     </div>
 </body>
 

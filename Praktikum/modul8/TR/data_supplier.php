@@ -65,12 +65,12 @@ include "layout/header.php"
 <div class="container my-4">
     <div class="card">
         <div class="card-header">
-            <h5 class="mt-2">Data Pelanggan</h5>
+            <h5 class="mt-2">Data Supplier</h5>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                    Tambah Pelanggan
+                    Tambah Supplier
                 </button>
             </div>
             <div class="table table-responsive mt-2">

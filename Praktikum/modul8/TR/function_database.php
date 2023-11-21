@@ -225,6 +225,7 @@ function getRangeDate($start, $end)
     FROM transaksi WHERE waktu_transaksi BETWEEN '$start' AND '$end' GROUP BY waktu_transaksi")->fetch_all(MYSQLI_ASSOC);
 }
 
+
 function getAllIncome()
 {
     return mysqli_query(DB, "SELECT SUM(total) as jumlah_pendapatan FROM transaksi")->fetch_assoc();

@@ -1,13 +1,14 @@
 <?php
+include "function_database.php";
 if (isset($_GET["start"]) && $_GET["end"]) {
-header("Content-Type: application/ms-excel; charset=utf-8");
-header("Content-Disposition: attachment; filename=laporan.xls");
+    header("Content-Type: application/ms-excel; charset=utf-8");
+    header("Content-Disposition: attachment; filename=laporan.xls");
 
-$start = $_GET["start"];
-$end = $_GET["end"];
-$data_penjualan = getRangeDate($start, $end);
-$total_pendapatan = array_sum(array_column($data_penjualan, 'total'));
-$total_pelanggan = array_sum(array_column($data_penjualan, 'pelanggan'));
+    $start = $_GET["start"];
+    $end = $_GET["end"];
+    $data_penjualan = getRangeDate($start, $end);
+    $total_pendapatan = array_sum(array_column($data_penjualan, 'total'));
+    $total_pelanggan = array_sum(array_column($data_penjualan, 'pelanggan'));
 }
 
 ?>
@@ -42,7 +43,7 @@ $total_pelanggan = array_sum(array_column($data_penjualan, 'pelanggan'));
                 <?php endforeach; ?>
             </tbody>
         </table>
-
+        <br>
         <table border="1">
             <tr>
                 <th>JUMLAH PELANGGAN</th>
