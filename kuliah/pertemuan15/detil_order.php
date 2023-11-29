@@ -66,7 +66,9 @@ $title = "DETAIL ORDER";
         </h5>
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <a href="data_order.php" class="btn btn-secondary btn-sm mb-3">Kembali Ke Data Order</a>
+                <?php if (isset($_SESSION["login"])) : ?>
+                    <a href="data_order.php" class="btn btn-secondary btn-sm mb-3">Kembali Ke Data Order</a>
+                <?php endif; ?>
                 <a href="form_order_detil.php?id_order=<?= $id_order ?>&tambahlagi=''" class="btn btn-primary btn-sm mb-3">Tambah Order Detil</a>
             </div>
             <div class="table-responsive">
@@ -105,7 +107,9 @@ $title = "DETAIL ORDER";
                                 <th>HARGA</th>
                                 <th>JUMLAH</th>
                                 <th>SUB TOTAL</th>
-                                <th>STATUS</th>
+                                <?php if (isset($_SESSION["login"])) : ?>
+                                    <th>STATUS</th>
+                                <?php endif; ?>
                                 <th>AKSI</th>
                             </tr>
                         </thead>
@@ -122,21 +126,23 @@ $title = "DETAIL ORDER";
                                     <td><?= formatHarga($order["harga"]) ?></td>
                                     <td><?= $order["jumlah"] ?></td>
                                     <td><?= formatHarga($order["subtotal"]) ?></td>
-                                    <td>
-                                        <form action="" method="post">
-                                            <input type="hidden" value="<?= $id_order ?>" name="id_order">
-                                            <?php if ($order["status_order_detil"] == "baru" || $order["status_order_detil"] == "diproses") : ?>
-                                                <select class="form-select" name="status" onchange="this.form.submit()">
-                                                    <?php foreach ($status as $s) : ?>
-                                                        <option value="<?= $s ?>" <?= ($order["status_order_detil"] == $s) ? "selected" : "" ?>><?= $s ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            <?php else : ?>
-                                                <span class="btn btn-success btn-sm">Selesai</span>
-                                            <?php endif; ?>
-                                            <input type="hidden" name="id_order_detil" value="<?= $order["id_order_detil"] ?>">
-                                        </form>
-                                    </td>
+                                    <?php if (isset($_SESSION["login"])) : ?>
+                                        <td>
+                                            <form action="" method="post">
+                                                <input type="hidden" value="<?= $id_order ?>" name="id_order">
+                                                <?php if ($order["status_order_detil"] == "baru" || $order["status_order_detil"] == "diproses") : ?>
+                                                    <select class="form-select" name="status" onchange="this.form.submit()">
+                                                        <?php foreach ($status as $s) : ?>
+                                                            <option value="<?= $s ?>" <?= ($order["status_order_detil"] == $s) ? "selected" : "" ?>><?= $s ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                <?php else : ?>
+                                                    <span class="btn btn-success btn-sm">Selesai</span>
+                                                <?php endif; ?>
+                                                <input type="hidden" name="id_order_detil" value="<?= $order["id_order_detil"] ?>">
+                                            </form>
+                                        </td>
+                                    <?php endif; ?>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="detil_order.php?hapus_order_detil=<?= $order["id_order_detil"] ?>&id_order=<?= $id_order ?>" onclick="return confirm('Apakah anda yakin ingin id order ini?')">
                                             hapus
@@ -148,10 +154,13 @@ $title = "DETAIL ORDER";
                             <tr>
                                 <td colspan="8">Tidak ada Order detil</td>
                             </tr>
-                        <?php endif; ?>
                         </tbody>
+                    <?php endif; ?>
                 </table>
             </div>
+            <?php if (!isset($_SESSION["login"])) : ?>
+                <a class="btn btn-success btn-sm" href="login.php">Selesai & Keluar</a>
+            <?php endif; ?>
         </div>
     </div>
 </div>

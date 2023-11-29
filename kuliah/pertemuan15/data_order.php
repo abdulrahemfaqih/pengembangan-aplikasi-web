@@ -2,6 +2,11 @@
 session_start();
 require "functions.php";
 
+if(!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
 $getPelayan = getAllPelayan();
 deleteOrderWhereNotInDetil();
 
@@ -101,12 +106,13 @@ include("layout/header.php");
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <?php if($_SESSION["level"] == "") ?>
+                <?php if($_SESSION["level"] == "admin") : ?>
                 <div>
                     <a href="form_order.php" class="btn btn-primary mb-3">
                         Tambah Order
                     </a>
                 </div>
+                <?php endif ?>
                 <div class="d-flex align-items-center">
                     <form action="" method="get">
                         <div class="input-group mb-3">

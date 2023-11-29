@@ -12,6 +12,8 @@ if (isset($_GET["no_meja"])) {
 // menghapus order jika order tidak digunakan di order detil
 deleteOrderWhereNotInDetil();
 
+// GET RANDOM PELAYAN
+$pelayan = getRandPelayan();
 // ambil semua pelayan
 $getPelayan = getAllPelayan();
 
@@ -75,7 +77,7 @@ include "layout/header.php"
                                 <td><input type="text" required class="form-control" readonly value="<?= $jam_sekarang ?>" name="jam_order"></td>
                                 <td>
                                     <select required class="form-select" name="id_pelayan">
-                                        <option value="" disabled selected>Pilih Pelayan</option>
+                                        <option value="<?= $pelayan["id_pelayan"] ?>"><?= $pelayan["nama_pelayan"] ?></option>
                                         <?php foreach ($getPelayan as $pelayan) : ?>
                                             <option value="<?= $pelayan["id_pelayan"] ?>"><?= $pelayan["nama_pelayan"] ?></option>
                                         <?php endforeach; ?>

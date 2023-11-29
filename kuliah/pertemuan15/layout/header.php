@@ -20,36 +20,36 @@ $currentMenu = isset($_GET['menu']) ? $_GET['menu'] : '';
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="pembungkus container py-2">
             <?php if (isset($_SESSION["login"])) : ?>
-            <a class="navbar-brand fw-bold text-secondary <?= ($currentMenu == 'beranda') ? 'text-light fw-bold' : '' ?>" href="index.php?menu=beranda">Waroeng Faqih</a>
+                <a class="navbar-brand fw-bold text-secondary <?= ($currentMenu == 'beranda') ? 'text-light fw-bold' : '' ?>" href="index.php?menu=beranda">Waroeng Faqih</a>
             <?php else : ?>
                 <a class="navbar-brand fw-bold text-secondary">Waroeng Faqih</a>
             <?php endif; ?>
             <?php if (isset($_SESSION["login"])) : ?>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav mx-auto">
-                        <?php if($_SESSION["level"] == "admin") : ?>
-                        <li class="nav-item">
-                            <a class="nav-link <?= ($currentMenu == 'menu') ? 'text-light fw-bold' : '' ?>" href="data_menu.php?menu=menu">Menu</a>
-                        </li>
+                        <?php if ($_SESSION["level"] == "admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= ($currentMenu == 'menu') ? 'text-light fw-bold' : '' ?>" href="data_menu.php?menu=menu">Menu</a>
+                            </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($currentMenu == 'order') ? 'text-light fw-bold' : '' ?>" href="data_order.php?menu=order">Order</a>
+                            <a class="nav-link <?= ($currentMenu == 'data_order') ? 'text-light fw-bold' : '' ?>" href="data_order.php?menu=data_order">Data Order</a>
                         </li>
 
                     </ul>
                     <?php if (isset($_SESSION["login"]) && isset($_SESSION["nama"])) :
-                    $nama = $_SESSION["nama"];
+                        $nama = $_SESSION["nama"];
                     ?>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="text-secondary"><?= $nama ?></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item bg-danger" href="logout.php" onclick="return confirm('apakah anda yakin ingin logout')">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="text-secondary"><?= $nama ?></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item bg-danger" href="logout.php" onclick="return confirm('apakah anda yakin ingin logout')">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

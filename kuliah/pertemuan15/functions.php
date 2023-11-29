@@ -131,10 +131,6 @@ function updateStatusOrder($id_order, $keterangan_status)
     mysqli_query(DB, "UPDATE `order` SET status_order = '$keterangan_status' WHERE id_order = $id_order");
 }
 
-function getAllPelayan()
-{
-    return mysqli_query(DB, "SELECT * FROM pelayan")->fetch_all(MYSQLI_ASSOC);
-}
 
 function getInfoMejaSebelumnya($no_meja)
 {
@@ -163,6 +159,16 @@ function cari($keyword, $awalData, $limitDataPerHalaman)
 
 
     return mysqli_query(DB, $query)->fetch_all(MYSQLI_ASSOC);
+}
+
+// =========================TABEL PELAYAN =======================
+
+function getAllPelayan() {
+    return mysqli_query(DB, "SELECT * FROM pelayan")->fetch_all(MYSQLI_ASSOC);
+}
+
+function getRandPelayan() {
+    return mysqli_query(DB, "SELECT * FROM pelayan ORDER BY RAND() LIMIT 1")->fetch_assoc();
 }
 
 // =========================== TABEL USER ========================
