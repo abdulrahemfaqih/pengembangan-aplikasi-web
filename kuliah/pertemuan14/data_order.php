@@ -85,7 +85,7 @@ include("layout/header.php");
 
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-around align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <a href="form_order.php" class="btn btn-primary mb-3">
                         Tambah Order

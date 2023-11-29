@@ -146,7 +146,7 @@ function deleteOrderWhereNotInDetil()
     return mysqli_query(DB, "DELETE FROM `order` WHERE id_order NOT IN (SELECT id_order FROM order_detil)");
 }
 
-function cari($keyword)
+function cari($keyword, $awalData, $limitDataPerHalaman)
 {
     $query = "SELECT `order`.*, pelayan.nama_pelayan
             FROM `order`
@@ -157,10 +157,18 @@ function cari($keyword)
             `order`.jam_order LIKE '%$keyword%' OR
             `pelayan`.nama_pelayan LIKE '%$keyword%' OR
             `order`.no_meja LIKE '%$keyword%' OR
-            `order`.status_order LIKE '%$keyword%'";
+            `order`.status_order LIKE '%$keyword%'
+            LIMIT $awalData, $limitDataPerHalaman
+            ";
 
 
     return mysqli_query(DB, $query)->fetch_all(MYSQLI_ASSOC);
+}
+
+// =========================== TABEL USER ========================
+
+function getDataUser($username) {
+    return mysqli_query(DB, "SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
 }
 
 //========================= OTHER FUNCTIONS ====================

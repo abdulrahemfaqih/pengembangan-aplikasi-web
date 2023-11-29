@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "functions.php";
 // ambil no meja jika di url ada
 if (isset($_GET["no_meja"])) {
@@ -86,7 +87,7 @@ include "layout/header.php"
                     </table>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <?php if (!isset($_GET["qr"])) : ?>
+                    <?php if (!isset($_GET["qr"]) && isset($_SESSION["login"])) : ?>
                         <a href="data_order.php" class="btn btn-secondary">Kembali</a>
                     <?php endif; ?>
                     <button type="submit" name="lanjut_pesan" class="btn btn-primary">Lanjut Pemesanan</button>

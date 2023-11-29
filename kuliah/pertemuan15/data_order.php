@@ -1,23 +1,38 @@
 <?php
+session_start();
 require "functions.php";
 
 $getPelayan = getAllPelayan();
 deleteOrderWhereNotInDetil();
 
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+
+if (!empty($keyword)) {
+    $where_clouse = " JOIN `pelayan` ON `order`.id_pelayan = pelayan.id_pelayan WHERE
+    `order`.id_order LIKE '%$keyword%' OR
+    `order`.tgl_order LIKE '%$keyword%' OR
+    `order`.jam_order LIKE '%$keyword%' OR
+    `pelayan`.nama_pelayan LIKE '%$keyword%' OR
+    `order`.no_meja LIKE '%$keyword%' OR
+    `order`.status_order LIKE '%$keyword%'";
+} else {
+    $where_clouse = '';
+}
 
 //PAGINATION
-
 $limitDataPerHalaman = 10;
 
-$jumlahData = count(query("SELECT * FROM `order`"));
+$jumlahData = count(query("SELECT * FROM `order` $where_clouse"));
 $jumlahHalaman = ceil($jumlahData / $limitDataPerHalaman);
 $halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
 $awalData = ($limitDataPerHalaman * $halamanAktif) - $limitDataPerHalaman;
 
 
-if (isset($_GET["cari"])) {
-    $keyword = $_GET["keyword"];
-    $listOrder  = cari($keyword);
+
+
+
+if (isset($_GET["keyword"])) {
+    $listOrder  = cari($keyword, $awalData, $limitDataPerHalaman);
 } else {
     if (isset($_GET["sort_tanggal"])) {
         if ($_GET["sort_tanggal"] == "asc") {
@@ -85,19 +100,22 @@ include("layout/header.php");
 
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-around align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+                <?php if($_SESSION["level"] == "") ?>
                 <div>
                     <a href="form_order.php" class="btn btn-primary mb-3">
                         Tambah Order
                     </a>
                 </div>
-                <form action="" method="get" class="d-flex">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cari disini..." value="<?= isset($_GET["keyword"]) ? $keyword : '' ?>" name="keyword" id="keyword">
-                        <input type="hidden" name="cari" value="1">
-                        <button class="btn btn-primary" type="submit" name="cari" id="cari">Cari</button>
-                    </div>
-                </form>
+                <div class="d-flex align-items-center">
+                    <form action="" method="get">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Cari disini..." value="<?= isset($_GET["keyword"]) ? $keyword : '' ?>" name="keyword" id="keyword">
+                            <button class="btn btn-primary" type="submit">Cari</button>
+                        </div>
+                    </form>
+                    <a class="btn btn-secondary mb-3 ms-3" href="data_order.php">Reset</a>
+                </div>
             </div>
 
             <div class="table table-container table-responsive">
@@ -239,23 +257,24 @@ include("layout/header.php");
                 <ul class="pagination">
                     <?php if ($halamanAktif > 1) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $halamanAktif - 1 ?>" aria-label="Previous">
+                            <a class="page-link" href="?page=<?= $halamanAktif - 1 ?>&keyword=<?= $keyword ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                     <?php endif; ?>
-
                     <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
                         <?php if ($i == $halamanAktif) : ?>
-                            <li class="page-item active"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="?page=<?= $i ?>&keyword=<?= $keyword ?>"><?= $i ?></a>
+                            </li>
                         <?php else : ?>
-                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $i ?>&keyword=<?= $keyword ?>"><?= $i ?></a></li>
                         <?php endif ?>
                     <?php endfor; ?>
 
                     <?php if ($halamanAktif < $jumlahHalaman) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $$halamanAktif + 1 ?>" aria-label="Next">
+                            <a class="page-link" href="?page=<?= $$halamanAktif + 1 ?>&keyword=<?= $keyword ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
