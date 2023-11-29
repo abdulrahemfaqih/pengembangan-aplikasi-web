@@ -171,7 +171,7 @@ function countPelangganInTransDetail($id_pelanggan)
 function getAllTransaksi()
 {
     return mysqli_query(DB, "SELECT pelanggan.nama, transaksi.* FROM transaksi
-    JOIN pelanggan ON transaksi.pelanggan_id = pelanggan.id;")->fetch_all(MYSQLI_ASSOC);
+    JOIN pelanggan ON transaksi.pelanggan_id = pelanggan.id")->fetch_all(MYSQLI_ASSOC);
 }
 
 function getTransaksiJoinBarang($transaksi_id)

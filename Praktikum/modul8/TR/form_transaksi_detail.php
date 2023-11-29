@@ -53,7 +53,7 @@ if (isset($_GET["barang_id"])) {
 }
 
 if (isset($_POST["selesai"])) {
-    header("Location: detail_transaksi.php?id_transaksi?$id_transaksi");
+    header("Location: detail_transaksi.php?id_transaksi=$id_transaksi");
 }
 
 
@@ -125,7 +125,18 @@ include "layout/header.php"
                         if (!empty($data_transaksi_detail)) : ?>
                             <thead class="table-secondary">
                                 <tr>
-                                    <th>KODE BARANG</th>
+                                    <th>
+                                        KODE BARANG
+                                        <a href="data_order.php?sort_kode_barang=<?php echo isset($_GET["sort_kode_barang"]) && $_GET["sort_kode_barang"] === "asc" ? "desc" : "asc"; ?>">
+                                            <?php if (isset($_GET["sort_kode_barang"]) && $_GET["sort_kode_barang"] == "asc") : ?>
+                                                <i class="fa fa-sort-asc"></i>
+                                            <?php elseif (isset($_GET["sort_kode_barang"]) && $_GET["sort_kode_barang"] == "desc") : ?>
+                                                <i class="fa fa-sort-desc"></i>
+                                            <?php else : ?>
+                                                <i class="fa fa-sort"></i>
+                                            <?php endif; ?>
+                                        </a>
+                                    </th>
                                     <th>NAMA BARANG</th>
                                     <th>JUMLAH</th>
                                     <th>HARGA SATUAN</th>

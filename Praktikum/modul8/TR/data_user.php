@@ -155,7 +155,7 @@ include "layout/header.php"
                                                 <input type="hidden" name="id_user" value="<?= $user["id_user"] ?>">
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlInput1" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" placeholder="inputkan nama product" value="<?= $user["username"] ?>" name="username">
+                                                    <input type="text" class="form-control"value="<?= $user["username"] ?>" name="username">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
