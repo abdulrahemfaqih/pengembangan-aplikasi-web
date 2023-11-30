@@ -68,10 +68,10 @@ if (isset($_GET["keyword"])) {
 
     } else if (isset($_GET["sort_keterangan"])) {
         if ($_GET["sort_keterangan"] == "asc") {
-            $key = "sort&keterangan=asc&";
+            $key = "sort_keterangan=asc&";
             $data_transaksi = query("SELECT transaksi.*, pelanggan.nama FROM transaksi JOIN `pelanggan` ON transaksi.pelanggan_id= pelanggan.id ORDER BY keterangan ASC  LIMIT $awalData, $limitDataPerHalaman");
         } else {
-            $key = "sort&keterangan=desc&";
+            $key = "sort_keterangan=desc&";
             $data_transaksi = query("SELECT transaksi.*, pelanggan.nama FROM transaksi JOIN `pelanggan` ON transaksi.pelanggan_id= pelanggan.id ORDER BY keterangan DESC  LIMIT $awalData, $limitDataPerHalaman");
         }
     } else if (isset($_GET["sort_total"])) {
@@ -143,7 +143,7 @@ include "layout/header.php"
     <div class="card">
         <div class="card-header mb-3 d-flex align-items-center justify-content-between">
             <h5 class="mt-2">Data Transaksi</h5>
-            <a href="data_transaksi.php" class="btn btn-secondary btn-sm">Reset</a>
+            <a href="data_transaksi.php?menu=transaksi" class="btn btn-secondary btn-sm">Reset</a>
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -156,7 +156,7 @@ include "layout/header.php"
                         </div>
                     </div>
                 </form>
-                <form action="" method="get" class="">
+                <form action="" method="get">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Cari disini..." value="<?= isset($_GET["keyword"]) ? $keyword : '' ?>" name="keyword" id="keyword">
                         <button class="btn btn-primary" type="submit" id="cari">Cari</button>
@@ -299,6 +299,7 @@ include "layout/header.php"
                         </tbody>
                 </table>
             </div>
+
             <!-- Pagination -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
